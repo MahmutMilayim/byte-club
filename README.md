@@ -6,10 +6,10 @@
 #
 ##  495 Süreci Scrum Master Tablosu
 
-| Sprint No |  | Scrum Master          |
-|-----------|--------------------------|
-| Sprint 1  |  | Alper Burak DOĞAN     |
-| Sprint 2  |  | Mahmut MİLAYİM        |
-| Sprint 3  |  | Zehra ATALAY          |
-| Sprint 4  |  | Samet BOZDOĞAN        |
+#| Sprint No |  | Scrum Master          |
+#|-----------|--------------------------|
+#| Sprint 1  |  | Alper Burak DOĞAN     |
+#| Sprint 2  |  | Mahmut MİLAYİM        |
+#| Sprint 3  |  | Zehra ATALAY          |
+#| Sprint 4  |  | Samet BOZDOĞAN        |
 
