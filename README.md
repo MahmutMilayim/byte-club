@@ -4,12 +4,12 @@
 #
 # Trello Link: https://trello.com/invite/b/6834cc2d68d2098ebfe73924/ATTI6ceb4acd76e71db191a36dc687ff8add991E82D7/byte-club
 #
-#
-#
-#
-#
-#
-#
-#
-#
-#
+##  495 Süreci Scrum Master Tablosu
+
+| Sprint No |  | Scrum Master          |
+|-----------|--------------------------|
+| Sprint 1  |  | Alper Burak DOĞAN     |
+| Sprint 2  |  | Mahmut MİLAYİM        |
+| Sprint 3  |  | Zehra ATALAY          |
+| Sprint 4  |  | Samet BOZDOĞAN        |
+
