@@ -4,10 +4,9 @@
 #
 # Trello Link: https://trello.com/invite/b/6834cc2d68d2098ebfe73924/ATTI6ceb4acd76e71db191a36dc687ff8add991E82D7/byte-club
 #
-#  495 Süreci Scrum Master Tablosu
+## 495 Süreci Scrum Master Tablosu
 
-##| Sprint No |  | Scrum Master          |
-
+| Sprint No |  | Scrum Master          |
 
 |-----------|--------------------------|
 
