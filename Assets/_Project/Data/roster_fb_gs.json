@@ -1,0 +1,35 @@
+{
+  "teams": [
+    { "teamId": "GS", "teamName": "Galatasaray", "shortCode": "GS" },
+    { "teamId": "FB", "teamName": "Fenerbahce", "shortCode": "FB" }
+  ],
+  "players": [
+    { "playerId": "GS_0001", "playerName": "Ugurcan Çakir", "jerseyNumber": 1,  "role": "GK",  "interceptRadiusMeters": 1.25, "teamId": "GS" },
+    { "playerId": "GS_0002", "playerName": "Ismail Jakobs", "jerseyNumber": 4,  "role": "DEF", "interceptRadiusMeters": 1.25, "teamId": "GS" },
+    { "playerId": "GS_0003", "playerName": "Davinson Sánchez", "jerseyNumber": 6,  "role": "DEF", "interceptRadiusMeters": 1.25, "teamId": "GS" },
+    { "playerId": "GS_0004", "playerName": "Abdülkerim Bardakci", "jerseyNumber": 42, "role": "DEF", "interceptRadiusMeters": 1.25, "teamId": "GS" },
+    { "playerId": "GS_0005", "playerName": "Wilfried Singo", "jerseyNumber": 90, "role": "DEF", "interceptRadiusMeters": 1.25, "teamId": "GS" },
+
+    { "playerId": "GS_0006", "playerName": "Lucas Torreira", "jerseyNumber": 34, "role": "MID", "interceptRadiusMeters": 1.25, "teamId": "GS" },
+    { "playerId": "GS_0007", "playerName": "Ilkay Gündogan", "jerseyNumber": 20, "role": "MID", "interceptRadiusMeters": 1.25, "teamId": "GS" },
+    { "playerId": "GS_0008", "playerName": "Gabriel Sara", "jerseyNumber": 8,  "role": "MID", "interceptRadiusMeters": 1.25, "teamId": "GS" },
+
+    { "playerId": "GS_0009", "playerName": "Mauro Icardi", "jerseyNumber": 9,  "role": "FWD", "interceptRadiusMeters": 1.25, "teamId": "GS" },
+    { "playerId": "GS_0010", "playerName": "Leroy Sané", "jerseyNumber": 10, "role": "FWD", "interceptRadiusMeters": 1.25, "teamId": "GS" },
+    { "playerId": "GS_0011", "playerName": "Yunus Akgün", "jerseyNumber": 11, "role": "FWD", "interceptRadiusMeters": 1.25, "teamId": "GS" },
+
+    { "playerId": "FB_0001", "playerName": "Ederson", "jerseyNumber": 31, "role": "GK",  "interceptRadiusMeters": 1.25, "teamId": "FB" },
+    { "playerId": "FB_0002", "playerName": "Caglar Söyüncü", "jerseyNumber": 4,  "role": "DEF", "interceptRadiusMeters": 1.25, "teamId": "FB" },
+    { "playerId": "FB_0003", "playerName": "Mert Müldür", "jerseyNumber": 18, "role": "DEF", "interceptRadiusMeters": 1.25, "teamId": "FB" },
+    { "playerId": "FB_0004", "playerName": "Jayden Oosterwolde", "jerseyNumber": 24, "role": "DEF", "interceptRadiusMeters": 1.25, "teamId": "FB" },
+    { "playerId": "FB_0005", "playerName": "Nélson Semedo", "jerseyNumber": 27, "role": "DEF", "interceptRadiusMeters": 1.25, "teamId": "FB" },
+
+    { "playerId": "FB_0006", "playerName": "Ismail Yüksek", "jerseyNumber": 5,  "role": "MID", "interceptRadiusMeters": 1.25, "teamId": "FB" },
+    { "playerId": "FB_0007", "playerName": "Fred", "jerseyNumber": 7,  "role": "MID", "interceptRadiusMeters": 1.25, "teamId": "FB" },
+    { "playerId": "FB_0008", "playerName": "Edson Álvarez", "jerseyNumber": 11, "role": "MID", "interceptRadiusMeters": 1.25, "teamId": "FB" },
+    { "playerId": "FB_0009", "playerName": "Marco Asensio", "jerseyNumber": 21, "role": "MID", "interceptRadiusMeters": 1.25, "teamId": "FB" },
+
+    { "playerId": "FB_0010", "playerName": "Kerem Aktürkoglu", "jerseyNumber": 9,  "role": "FWD", "interceptRadiusMeters": 1.25, "teamId": "FB" },
+    { "playerId": "FB_0011", "playerName": "Jhon Durán", "jerseyNumber": 10, "role": "FWD", "interceptRadiusMeters": 1.25, "teamId": "FB" }
+  ]
+}

@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2890cddb0ae8b41baa45b38a19ddffe7, type: 3}
+  m_Name: PlayerDef_GS0002
+  m_EditorClassIdentifier: 
+  playerId: GS0002
+  playerName: Away Player 2
+  jerseyNumber: 2
+  team: {fileID: 11400000, guid: ae79f9c226ca74d60a7c8b048e072e16, type: 2}
+  role: 3
+  interceptRadiusMeters: 1.25
+  visualPrefab: {fileID: 4223382128663614592, guid: 6dded3e5147c44a38a7882e449d7bdc1,
+    type: 3}
