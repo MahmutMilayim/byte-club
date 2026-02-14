@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class FrameSnapshotApplier : MonoBehaviour
 {
+
+    public event System.Action<FrameSnapshotDTO> OnSnapshotApplied;
+
     [Header("Input")]
     public TextAsset frameJson;                 // frame_0010.json
     public MetersToWorldMapper mapper;
@@ -123,6 +126,7 @@ public class FrameSnapshotApplier : MonoBehaviour
         {
             if (_ballGO != null) _ballGO.SetActive(false);
         }
+        OnSnapshotApplied?.Invoke(dto);
 
         Debug.Log($"Applied snapshot frame {dto.frameIndex} (players: {dto.players.Length}, shooter: {shooterId}).");
     }

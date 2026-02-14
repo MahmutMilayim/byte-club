@@ -22,10 +22,28 @@ public class ShotCameraController : MonoBehaviour
         cam = Camera.main;
     }
 
+    private void OnEnable()
+    {
+        if (applier != null)
+            applier.OnSnapshotApplied += HandleSnapshotApplied;
+    }
+
+    private void OnDisable()
+    {
+        if (applier != null)
+            applier.OnSnapshotApplied -= HandleSnapshotApplied;
+    }
+
     private void Start()
     {
         if (alignOnStart)
             Align();
+    }
+
+    private void HandleSnapshotApplied(FrameSnapshotDTO _)
+    {
+        // dto parametresini kullanmak istersen Align(dto) yapabilirsin
+        Align();
     }
 
     [ContextMenu("Align Camera To Shooter")]
@@ -37,13 +55,8 @@ public class ShotCameraController : MonoBehaviour
             return;
         }
 
-        // 1) DTO'yu applier'dan almaya çalış
-        FrameSnapshotDTO dto = null;
+        FrameSnapshotDTO dto = applier.LastDTO;
 
-        // Eğer LastDTO doğru eklenmişse bunu kullanır
-        dto = applier.LastDTO;
-
-        // 2) Fallback: LastDTO yoksa JSON'dan tekrar parse et
         if (dto == null)
         {
             if (applier.frameJson == null)
@@ -73,16 +86,11 @@ public class ShotCameraController : MonoBehaviour
 
         string targetGoal = (dto.shooter.targetGoal ?? "TOP").Trim().ToUpperInvariant();
 
-        // goal center in meters:
-        // width center = 34
-        // length end = 0 or 105
         float widthCenter = 34f;
         float lengthEnd = (targetGoal == "BOTTOM") ? 0f : 105f;
 
-        // mapper lengthAlongX=true ise yine ToWorld(width, length) doğru çalışacak
-
-        
         Vector3 goalWorld = mapper.ToWorld(widthCenter, lengthEnd);
+
         Vector3 dir = (goalWorld - shooterWorld);
         dir.y = 0f;
         dir = dir.sqrMagnitude > 0.0001f ? dir.normalized : Vector3.forward;
