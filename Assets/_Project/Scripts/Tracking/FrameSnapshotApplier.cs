@@ -14,6 +14,10 @@ public class FrameSnapshotApplier : MonoBehaviour
     [Header("Runtime")]
     public Transform runtimeRoot;               // null ise otomatik oluşturur
     public bool hideMissingPlayers = true;      // frame’de olmayanları gizle
+    [Header("Shooter")]
+    public bool markShooter = true;
+    public float shooterMarkerHeight = 1.8f;
+    public float shooterMarkerScale = 0.25f;
 
     private readonly Dictionary<int, GameObject> _players = new();
     private GameObject _ballGO;
@@ -27,7 +31,6 @@ public class FrameSnapshotApplier : MonoBehaviour
         }
     }
 
-    [ContextMenu("Apply Snapshot")]
     public void ApplySnapshot()
     {
         if (frameJson == null || mapper == null || playerPrefab == null)
@@ -43,6 +46,9 @@ public class FrameSnapshotApplier : MonoBehaviour
             return;
         }
 
+        // Shooter id (yoksa -1)
+        int shooterId = (dto.shooter != null) ? dto.shooter.playerId : -1;
+
         var seen = new HashSet<int>();
 
         // 1) Players: create if missing, then update position
@@ -53,10 +59,24 @@ public class FrameSnapshotApplier : MonoBehaviour
             if (!_players.TryGetValue(p.id, out var go) || go == null)
             {
                 go = Instantiate(playerPrefab, runtimeRoot);
-                go.name = $"P_{p.id}";
                 _players[p.id] = go;
             }
 
+            bool isShooter = (p.id == shooterId);
+
+            // İsim + shooter marker
+            if (isShooter)
+            {
+                go.name = $"SHOOTER_{p.id}";
+                if (markShooter) EnsureShooterMarker(go.transform);
+            }
+            else
+            {
+                go.name = $"P_{p.id}";
+                if (markShooter) RemoveShooterMarkerIfExists(go.transform);
+            }
+
+            // Konum
             go.transform.position = mapper.ToWorld(p.x, p.y);
             go.SetActive(true);
         }
@@ -67,7 +87,12 @@ public class FrameSnapshotApplier : MonoBehaviour
             foreach (var kv in _players)
             {
                 if (!seen.Contains(kv.Key) && kv.Value != null)
+                {
                     kv.Value.SetActive(false);
+
+                    // İstersen: gizlenenlerde marker da temizle (opsiyonel)
+                    if (markShooter) RemoveShooterMarkerIfExists(kv.Value.transform);
+                }
             }
         }
 
@@ -88,6 +113,31 @@ public class FrameSnapshotApplier : MonoBehaviour
             if (_ballGO != null) _ballGO.SetActive(false);
         }
 
-        Debug.Log($"Applied snapshot frame {dto.frameIndex} (players: {dto.players.Length}).");
+        Debug.Log($"Applied snapshot frame {dto.frameIndex} (players: {dto.players.Length}, shooter: {shooterId}).");
+    }
+
+
+    private const string ShooterMarkerName = "__ShooterMarker";
+
+    private void EnsureShooterMarker(Transform player)
+    {
+        var existing = player.Find(ShooterMarkerName);
+        if (existing != null) return;
+
+        var marker = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        marker.name = ShooterMarkerName;
+        marker.transform.SetParent(player, false);
+        marker.transform.localPosition = new Vector3(0f, shooterMarkerHeight, 0f);
+        marker.transform.localScale = Vector3.one * shooterMarkerScale;
+
+        // collider istemiyoruz
+        var col = marker.GetComponent<Collider>();
+        if (col != null) Destroy(col);
+    }
+
+    private void RemoveShooterMarkerIfExists(Transform player)
+    {
+        var existing = player.Find(ShooterMarkerName);
+        if (existing != null) Destroy(existing.gameObject);
     }
 }
