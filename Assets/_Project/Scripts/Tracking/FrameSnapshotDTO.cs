@@ -12,6 +12,9 @@ public class FrameSnapshotDTO
     // ✅ Opsiyonel: JSON'da goal alanı varsa okur
     public GoalDTO goal;
 
+
+    public FrameSnapshotDTO LastDTO { get; private set; }
+
     public PlayerDTO[] players;
     public BallDTO ball;
 

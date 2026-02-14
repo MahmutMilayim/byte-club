@@ -39,6 +39,7 @@ public class FrameSnapshotApplier : MonoBehaviour
         if (applyOnStart)
             ApplySnapshot();
     }
+    public FrameSnapshotDTO LastDTO { get; private set; }
 
     public void ApplySnapshot()
     {
@@ -49,6 +50,7 @@ public class FrameSnapshotApplier : MonoBehaviour
         }
 
         var dto = JsonUtility.FromJson<FrameSnapshotDTO>(frameJson.text);
+        LastDTO = dto;
         if (dto == null || dto.players == null)
         {
             Debug.LogError("FrameSnapshotApplier: JSON parse failed or players missing.");

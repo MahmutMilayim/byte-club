@@ -16,3 +16,5 @@ MonoBehaviour:
   fieldLength: 105
   originAtCenter: 1
   yOffset: 0.05
+  swapXY: 0
+  flipY: 1
