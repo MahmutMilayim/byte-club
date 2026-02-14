@@ -14,6 +14,10 @@ public class FrameSnapshotApplier : MonoBehaviour
     [Header("Runtime")]
     public Transform runtimeRoot;               // null ise otomatik oluşturur
     public bool hideMissingPlayers = true;      // frame’de olmayanları gizle
+
+    [Header("Auto")]
+    public bool applyOnStart = true;
+
     [Header("Shooter")]
     public bool markShooter = true;
     public float shooterMarkerHeight = 1.8f;
@@ -29,6 +33,11 @@ public class FrameSnapshotApplier : MonoBehaviour
             var root = GameObject.Find("FootballRuntime") ?? new GameObject("FootballRuntime");
             runtimeRoot = root.transform;
         }
+    }
+    private void Start()
+    {
+        if (applyOnStart)
+            ApplySnapshot();
     }
 
     public void ApplySnapshot()
