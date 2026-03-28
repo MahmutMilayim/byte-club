@@ -159,6 +159,11 @@ public class FrameSnapshotApplier : MonoBehaviour
 
         go = Instantiate(playerPrefab, runtimeRoot);
         _players[id] = go;
+
+        var driver = go.GetComponent<PlayerAnimationDriver>();
+        if (driver != null)
+            driver.SetIdle();
+
         return go;
     }
 
@@ -231,5 +236,10 @@ public class FrameSnapshotApplier : MonoBehaviour
 
         driver = go.GetComponent<PlayerAnimationDriver>();
         return driver != null;
+    }
+
+    public GameObject GetBallObject()
+    {
+        return _ballGO;
     }
 }

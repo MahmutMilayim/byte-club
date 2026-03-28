@@ -14,7 +14,7 @@ public class PlayerAnimationDriver : MonoBehaviour
     [SerializeField] private float defaultJogSpeed = 1f;
     [SerializeField] private bool resetToIdleOnEnable = true;
     [SerializeField] private bool faceActionDirection = true;
-    [SerializeField] private float rotateYOnly = 1f;
+    [SerializeField] private bool rotateYOnly = true;
 
     public Animator Animator => animator;
 
@@ -41,6 +41,9 @@ public class PlayerAnimationDriver : MonoBehaviour
     public void SetIdle()
     {
         if (animator == null) return;
+
+        animator.ResetTrigger(PassHash);
+        animator.ResetTrigger(ShootHash);
         animator.SetFloat(SpeedHash, 0f);
     }
 
@@ -51,6 +54,8 @@ public class PlayerAnimationDriver : MonoBehaviour
         if (speed < 0f)
             speed = defaultJogSpeed;
 
+        animator.ResetTrigger(PassHash);
+        animator.ResetTrigger(ShootHash);
         animator.SetFloat(SpeedHash, speed);
     }
 
@@ -60,6 +65,7 @@ public class PlayerAnimationDriver : MonoBehaviour
 
         animator.SetFloat(SpeedHash, 0f);
         animator.ResetTrigger(ShootHash);
+        animator.ResetTrigger(PassHash);
         animator.SetTrigger(PassHash);
     }
 
@@ -69,6 +75,7 @@ public class PlayerAnimationDriver : MonoBehaviour
 
         animator.SetFloat(SpeedHash, 0f);
         animator.ResetTrigger(PassHash);
+        animator.ResetTrigger(ShootHash);
         animator.SetTrigger(ShootHash);
     }
 
@@ -84,7 +91,7 @@ public class PlayerAnimationDriver : MonoBehaviour
 
         Quaternion look = Quaternion.LookRotation(dir.normalized, Vector3.up);
 
-        if (rotateYOnly > 0.5f)
+        if (rotateYOnly)
             transform.rotation = Quaternion.Euler(0f, look.eulerAngles.y, 0f);
         else
             transform.rotation = look;
@@ -100,7 +107,7 @@ public class PlayerAnimationDriver : MonoBehaviour
 
         Quaternion look = Quaternion.LookRotation(worldDirection.normalized, Vector3.up);
 
-        if (rotateYOnly > 0.5f)
+        if (rotateYOnly)
             transform.rotation = Quaternion.Euler(0f, look.eulerAngles.y, 0f);
         else
             transform.rotation = look;

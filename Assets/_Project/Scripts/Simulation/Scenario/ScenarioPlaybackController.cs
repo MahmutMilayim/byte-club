@@ -8,6 +8,7 @@ public class ScenarioPlaybackController : MonoBehaviour
     public MetersToWorldMapper mapper;
     public ShotGeometryConfig config;
     public BestPassEvaluator bestPassEvaluator;
+    public BallPlaybackController ballPlaybackController;
 
     [Header("Timing")]
     public float preActionDelay = 0.35f;
@@ -65,6 +66,7 @@ public class ScenarioPlaybackController : MonoBehaviour
         }
 
         ResetAllPlayersToIdle();
+        yield return null;
 
         if (!applier.TryGetPlayerAnimationDriver(dto.shooter.playerId, out var shooterDriver))
         {
@@ -84,23 +86,46 @@ public class ScenarioPlaybackController : MonoBehaviour
 
         Vector3 goalWorld = GetGoalWorld(dto.targetGoal);
 
-        // Direkt şut
-        if (!decision.usePass)
-        {
-            if (logDecision)
-            {
-                Debug.Log(
-                    $"[ScenarioPlayback] SHOOT selected | shooter={decision.initialShooterId} shot={decision.initialShooterOpenRatio * 100f:F1}%"
-                );
-            }
+// Direkt şut
+if (!decision.usePass)
+{
+    if (logDecision)
+    {
+        Debug.Log(
+            $"[ScenarioPlayback] SHOOT selected | shooter={decision.initialShooterId} shot={decision.initialShooterOpenRatio * 100f:F1}%"
+        );
+    }
 
-            shooterDriver.FaceTowards(goalWorld);
-            shooterDriver.PlayShoot();
+    bool hasOpenShotTarget = bestPassEvaluator.TryGetRandomOpenGoalTarget(
+    dto,
+    new Vector2(dto.shooter.x, dto.shooter.y),
+    decision.initialShooterId,
+    out var shotTargetMeters);
 
-            yield return new WaitForSeconds(resetDelay);
-            shooterDriver.SetIdle();
-            yield break;
-        }
+Vector3 shotTargetWorld = hasOpenShotTarget
+    ? mapper.ToWorld(shotTargetMeters.x, shotTargetMeters.y)
+    : Vector3.zero;
+
+if (ballPlaybackController != null)
+    ballPlaybackController.SnapBallInFrontOfPlayer(shooterDriver.transform);
+
+if (hasOpenShotTarget)
+    shooterDriver.FaceTowards(shotTargetWorld);
+else
+    shooterDriver.FaceTowards(goalWorld);
+
+shooterDriver.PlayShoot();
+
+if (ballPlaybackController != null && hasOpenShotTarget)
+{
+    Vector3 ballFrom = shooterDriver.transform.position + shooterDriver.transform.forward * 0.55f;
+    ballPlaybackController.PlayShot(ballFrom, shotTargetWorld);
+}
+
+yield return new WaitForSeconds(resetDelay);
+shooterDriver.SetIdle();
+yield break;
+}
 
         // Pass + shoot
         if (!applier.TryGetPlayerAnimationDriver(decision.passReceiverId, out var receiverDriver))
@@ -125,20 +150,55 @@ public class ScenarioPlaybackController : MonoBehaviour
             );
         }
 
-        Vector3 receiverWorld = mapper.ToWorld(decision.passReceiverMeters.x, decision.passReceiverMeters.y);
+       Vector3 receiverWorld = mapper.ToWorld(decision.passReceiverMeters.x, decision.passReceiverMeters.y);
 
-        shooterDriver.FaceTowards(receiverWorld);
-        shooterDriver.PlayPass();
+// Top önce ilk shooter'ın önüne gelsin
+if (ballPlaybackController != null)
+    ballPlaybackController.SnapBallInFrontOfPlayer(shooterDriver.transform);
 
-        yield return new WaitForSeconds(passToShootDelay);
+shooterDriver.FaceTowards(receiverWorld);
+shooterDriver.PlayPass();
 
-        receiverDriver.FaceTowards(goalWorld);
-        receiverDriver.PlayShoot();
+if (ballPlaybackController != null)
+{
+    Vector3 ballFrom = shooterDriver.transform.position + shooterDriver.transform.forward * 0.55f;
+    ballPlaybackController.PlayPass(ballFrom, receiverWorld);
+}
 
-        yield return new WaitForSeconds(resetDelay);
+yield return new WaitForSeconds(passToShootDelay);
 
-        shooterDriver.SetIdle();
-        receiverDriver.SetIdle();
+// Receiver artık yeni shooter
+bool hasReceiverOpenShotTarget = bestPassEvaluator.TryGetRandomOpenGoalTarget(
+    dto,
+    decision.passReceiverMeters,
+    decision.finalShooterId,
+    out var receiverShotTargetMeters);
+
+Vector3 receiverShotTargetWorld = hasReceiverOpenShotTarget
+    ? mapper.ToWorld(receiverShotTargetMeters.x, receiverShotTargetMeters.y)
+    : Vector3.zero;
+
+// Top receiver'ın önüne gelsin
+if (ballPlaybackController != null)
+    ballPlaybackController.SnapBallInFrontOfPlayer(receiverDriver.transform);
+
+if (hasReceiverOpenShotTarget)
+    receiverDriver.FaceTowards(receiverShotTargetWorld);
+else
+    receiverDriver.FaceTowards(goalWorld);
+
+receiverDriver.PlayShoot();
+
+if (ballPlaybackController != null && hasReceiverOpenShotTarget)
+{
+    Vector3 receiverBallFrom = receiverDriver.transform.position + receiverDriver.transform.forward * 0.55f;
+    ballPlaybackController.PlayShot(receiverBallFrom, receiverShotTargetWorld);
+}
+
+yield return new WaitForSeconds(resetDelay);
+
+shooterDriver.SetIdle();
+receiverDriver.SetIdle();
     }
 
     private void ResetAllPlayersToIdle()

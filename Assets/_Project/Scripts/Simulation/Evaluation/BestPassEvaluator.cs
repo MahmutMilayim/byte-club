@@ -306,4 +306,37 @@ public class BestPassEvaluator : MonoBehaviour
 
         return true;
     }
+
+    public bool TryGetRandomOpenGoalTarget(FrameSnapshotDTO dto, Vector2 shooterPos, int shooterId, out Vector2 targetMeters)
+{
+    targetMeters = default;
+
+    if (dto == null || config == null || mapper == null)
+        return false;
+
+    string targetGoal = (dto.targetGoal ?? "TOP").Trim().ToUpperInvariant();
+    float goalY = (targetGoal == "BOTTOM") ? 0f : config.fieldLength;
+
+    Vector2 goalLeft = new Vector2(config.goalCenterX - config.goalHalfWidth, goalY);
+    Vector2 goalRight = new Vector2(config.goalCenterX + config.goalHalfWidth, goalY);
+
+    List<GoalBlocker> blockers = BuildShotBlockers(dto, shooterId);
+    List<Vector2> openTargets = new List<Vector2>();
+
+    for (int i = 0; i < goalSamples; i++)
+    {
+        float t = (i + 0.5f) / goalSamples;
+        Vector2 sampleTarget = Vector2.Lerp(goalLeft, goalRight, t);
+
+        if (!IsBlocked(shooterPos, sampleTarget, blockers))
+            openTargets.Add(sampleTarget);
+    }
+
+    if (openTargets.Count == 0)
+        return false;
+
+    int randomIndex = Random.Range(0, openTargets.Count);
+    targetMeters = openTargets[randomIndex];
+    return true;
+}
 }
