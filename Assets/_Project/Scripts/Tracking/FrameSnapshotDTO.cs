@@ -6,46 +6,56 @@ public class FrameSnapshotDTO
 {
     public int frameIndex;
 
-    // ✅ EKLENDİ: JSON'daki shooter objesini buraya koyacağız
+    // Hangi kaleye şut atılıyor (frame-level)
+    public string targetGoal; // "TOP" or "BOTTOM"
+
+    // Şut atan oyuncu (pozisyon dahil)
     public ShooterDTO shooter;
 
-    // ✅ Opsiyonel: JSON'da goal alanı varsa okur
-    public GoalDTO goal;
+    // Rakip kaleci (pozisyon dahil)
+    public GoalkeeperDTO goalkeeper;
 
-
-    public FrameSnapshotDTO LastDTO { get; private set; }
-
+    // Diğer tüm oyuncular (role yok)
     public PlayerDTO[] players;
+
     public BallDTO ball;
 
-    [Serializable]
-    public class PlayerDTO
-    {
-        public int id;
-        public string teamId; // ✅ İstersen JSON'da teamId de gelsin
-        public float x;       // meters: 0..68
-        public float y;       // meters: 0..105
-    }
+    // -------------------------
+    // Nested DTO Classes
+    // -------------------------
 
     [Serializable]
     public class ShooterDTO
     {
         public int playerId;
         public string teamId;
-        public string targetGoal; // "TOP" or "BOTTOM"
+        public float x;  // meters: 0..68
+        public float y;  // meters: 0..105
     }
 
     [Serializable]
-    public class GoalDTO
+    public class GoalkeeperDTO
     {
-        public string target; // "TOP" or "BOTTOM"
+        public int playerId;
+        public string teamId;
+        public float x;
+        public float y;
+    }
+
+    [Serializable]
+    public class PlayerDTO
+    {
+        public int id;
+        public string teamId;
+        public float x;
+        public float y;
     }
 
     [Serializable]
     public class BallDTO
     {
         public bool visible;
-        public float x; // meters
-        public float y; // meters
+        public float x;
+        public float y;
     }
 }
