@@ -46,16 +46,17 @@ public class BestPassEvaluator : MonoBehaviour
         }
 
         string shooterTeam = dto.shooter.teamId;
+        int shooterId = dto.shooter.playerId;
         Vector2 shooterPos = new Vector2(dto.shooter.x, dto.shooter.y);
 
-        float shooterOpen = EvaluateShotAt(dto, shooterPos, shooterTeam);
+        float shooterOpen = EvaluateShotAt(dto, shooterPos, shooterId);
 
         var result = new DecisionResult
         {
             frameIndex = dto.frameIndex,
-            initialShooterId = dto.shooter.playerId,
+            initialShooterId = shooterId,
             initialShooterOpenRatio = shooterOpen,
-            finalShooterId = dto.shooter.playerId,
+            finalShooterId = shooterId,
             finalShooterOpenRatio = shooterOpen,
             usePass = false,
             passReceiverId = -1,
@@ -72,7 +73,7 @@ public class BestPassEvaluator : MonoBehaviour
             {
                 if (p == null) continue;
                 if (p.teamId != shooterTeam) continue;
-                if (p.id == dto.shooter.playerId) continue;
+                if (p.id == shooterId) continue;
 
                 Vector2 teammatePos = new Vector2(p.x, p.y);
                 bool passClear = IsPassClear(dto, shooterPos, teammatePos, shooterTeam);
@@ -87,7 +88,9 @@ public class BestPassEvaluator : MonoBehaviour
 
                 if (passClear)
                 {
-                    float teammateOpen = EvaluateShotAt(dto, teammatePos, shooterTeam);
+                    // Bu teammate yeni shooter kabul ediliyor.
+                    // O yüzden şut hesabında sadece o oyuncu blocker olmayacak.
+                    float teammateOpen = EvaluateShotAt(dto, teammatePos, p.id);
                     option.shotOpenRatio = teammateOpen;
 
                     if (teammateOpen > bestReceiverOpen)
@@ -99,11 +102,23 @@ public class BestPassEvaluator : MonoBehaviour
                 }
 
                 result.passOptions.Add(option);
+
+                if (logResult)
+                {
+                    if (!option.passClear)
+                    {
+                        Debug.Log($"[PASS-OPTION] receiver={option.receiverId} passClear=FALSE shotOpen=N/A");
+                    }
+                    else
+                    {
+                        Debug.Log($"[PASS-OPTION] receiver={option.receiverId} passClear=TRUE shotOpen={option.shotOpenRatio * 100f:F1}%");
+                    }
+                }
             }
         }
 
-        // Yeni kural:
-        // Eğer herhangi bir temiz pas opsiyonunun shotOpenRatio'su shooter'dan büyükse, pass seç.
+        // Yeni karar kuralı:
+        // Eğer en iyi temiz pas opsiyonu shooter'dan daha iyi ise PASS
         if (bestReceiverId != -1 && bestReceiverOpen > shooterOpen)
         {
             result.usePass = true;
@@ -149,7 +164,7 @@ public class BestPassEvaluator : MonoBehaviour
         return result;
     }
 
-    private float EvaluateShotAt(FrameSnapshotDTO dto, Vector2 shooterPos, string shooterTeamId)
+    private float EvaluateShotAt(FrameSnapshotDTO dto, Vector2 shooterPos, int shooterPlayerId)
     {
         string targetGoal = (dto.targetGoal ?? "TOP").Trim().ToUpperInvariant();
         float goalY = (targetGoal == "BOTTOM") ? 0f : config.fieldLength;
@@ -157,17 +172,18 @@ public class BestPassEvaluator : MonoBehaviour
         Vector2 leftPost = new Vector2(config.goalCenterX - config.goalHalfWidth, goalY);
         Vector2 rightPost = new Vector2(config.goalCenterX + config.goalHalfWidth, goalY);
 
-        var blockers = BuildShotBlockers(dto, shooterTeamId);
+        var blockers = BuildShotBlockers(dto, shooterPlayerId);
         var res = ShotOpennessEvaluator.Evaluate(shooterPos, leftPost, rightPost, blockers);
 
         return res.openRatio;
     }
 
-    private List<ShotOpennessEvaluator.Blocker> BuildShotBlockers(FrameSnapshotDTO dto, string shooterTeamId)
+    private List<ShotOpennessEvaluator.Blocker> BuildShotBlockers(FrameSnapshotDTO dto, int shooterPlayerId)
     {
         var blockers = new List<ShotOpennessEvaluator.Blocker>(32);
 
-        if (dto.goalkeeper != null && dto.goalkeeper.teamId != shooterTeamId)
+        // Goalkeeper her durumda blocker olabilir, ama shooter'ın kendisi ise ekleme
+        if (dto.goalkeeper != null && dto.goalkeeper.playerId != shooterPlayerId)
         {
             blockers.Add(new ShotOpennessEvaluator.Blocker
             {
@@ -176,12 +192,14 @@ public class BestPassEvaluator : MonoBehaviour
             });
         }
 
+        // players[] içindeki HERKES blocker olabilir
+        // Tek istisna: o anki shooter'ın kendisi
         if (dto.players != null)
         {
             foreach (var p in dto.players)
             {
                 if (p == null) continue;
-                if (p.teamId == shooterTeamId) continue;
+                if (p.id == shooterPlayerId) continue;
 
                 blockers.Add(new ShotOpennessEvaluator.Blocker
                 {
@@ -202,6 +220,7 @@ public class BestPassEvaluator : MonoBehaviour
             {
                 if (p == null) continue;
 
+                // Pası sadece rakipler bloklasın istiyorsan
                 if (onlyOpponentsBlockPass && p.teamId == shooterTeamId)
                     continue;
 

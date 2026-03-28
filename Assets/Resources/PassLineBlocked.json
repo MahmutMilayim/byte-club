@@ -1,0 +1,53 @@
+{
+  "frameIndex": 3,
+  "targetGoal": "TOP",
+  "shooter": {
+    "playerId": 108,
+    "teamId": "HOME",
+    "x": 24.0,
+    "y": 82.0
+  },
+  "goalkeeper": {
+    "playerId": 1,
+    "teamId": "AWAY",
+    "x": 34.0,
+    "y": 101.5
+  },
+  "players": [
+    {
+      "id": 101,
+      "teamId": "HOME",
+      "x": 34.0,
+      "y": 88.0
+    },
+    {
+      "id": 102,
+      "teamId": "HOME",
+      "x": 46.0,
+      "y": 72.0
+    },
+    {
+      "id": 201,
+      "teamId": "AWAY",
+      "x": 29.0,
+      "y": 85.0
+    },
+    {
+      "id": 202,
+      "teamId": "AWAY",
+      "x": 40.0,
+      "y": 94.0
+    },
+    {
+      "id": 203,
+      "teamId": "AWAY",
+      "x": 32.0,
+      "y": 96.0
+    }
+  ],
+  "ball": {
+    "visible": true,
+    "x": 24.0,
+    "y": 81.0
+  }
+}

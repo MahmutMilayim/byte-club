@@ -45,7 +45,7 @@ public class ShotVisualizationController : MonoBehaviour
     public bool ignoreTeammates = true;
 
     [Header("Open-area mesh")]
-    public bool drawOpenFillMesh = true;
+    public bool drawOpenFillMesh = false;
     public Material openFillMaterial;
     [Range(8, 256)] public int arcSegments = 64;
     [Tooltip("Distance from shooter used to draw the filled wedge (purely visual).")]

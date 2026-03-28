@@ -131,6 +131,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 286952255}
+  - component: {fileID: 286952256}
   m_Layer: 0
   m_Name: ScenarioPlaybackObject
   m_TagString: Untagged
@@ -147,12 +148,33 @@ Transform:
   m_GameObject: {fileID: 286952254}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.000187397, y: 0.8521242, z: 0.0045131743}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &286952256
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 286952254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e55822b294d134d47833fb8c536fdaf1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  applier: {fileID: 545786020}
+  mapper: {fileID: 11400000, guid: 5cf94f86a65b641d9968dbe8c9b6c7ff, type: 2}
+  config: {fileID: 11400000, guid: 20fb709238c9a4249958df58fb6a4634, type: 2}
+  bestPassEvaluator: {fileID: 545786023}
+  preActionDelay: 0.35
+  passToShootDelay: 0.9
+  resetDelay: 1
+  playOnSnapshotApplied: 1
+  logDecision: 1
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -496,7 +518,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7910fa66d97ac4ebd9837bcd51bda614, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  frameJson: {fileID: 4900000, guid: 19f3a1a7004d54a3a9eea3dd706dc79a, type: 3}
+  frameJson: {fileID: 4900000, guid: 1e99cf67c389e4cfab68c901d60b7882, type: 3}
   mapper: {fileID: 11400000, guid: 5cf94f86a65b641d9968dbe8c9b6c7ff, type: 2}
   playerPrefab: {fileID: 6172515834124393122, guid: d81170db743014faaa54bae171a59a44,
     type: 3}
@@ -557,7 +579,6 @@ MonoBehaviour:
   onlyOpponentsBlockPass: 1
   passBlockRadius: 0.85
   gkPassBlockRadius: 1.2
-  passMarginPercent: 5
   logResult: 1
 --- !u!114 &545786024
 MonoBehaviour:
@@ -911,7 +932,7 @@ MonoBehaviour:
   onlyOpponentsBlock: 1
   ignoreTeammates: 1
   drawOpenFillMesh: 1
-  openFillMaterial: {fileID: 15303, guid: 0000000000000000f000000000000000, type: 0}
+  openFillMaterial: {fileID: 2100000, guid: 10935684ef5a54cdc8e1dd37b83fc30b, type: 2}
   arcSegments: 64
   fillDistance: 25
   fillYOffset: 0.06
