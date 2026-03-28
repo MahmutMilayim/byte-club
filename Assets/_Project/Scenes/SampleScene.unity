@@ -122,6 +122,37 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &286952254
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 286952255}
+  m_Layer: 0
+  m_Name: ScenarioPlaybackObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &286952255
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 286952254}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.000187397, y: 0.8521242, z: 0.0045131743}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -467,7 +498,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   frameJson: {fileID: 4900000, guid: 19f3a1a7004d54a3a9eea3dd706dc79a, type: 3}
   mapper: {fileID: 11400000, guid: 5cf94f86a65b641d9968dbe8c9b6c7ff, type: 2}
-  playerPrefab: {fileID: 4223382128663614592, guid: 6dded3e5147c44a38a7882e449d7bdc1,
+  playerPrefab: {fileID: 6172515834124393122, guid: d81170db743014faaa54bae171a59a44,
     type: 3}
   ballPrefab: {fileID: 8764435781724101434, guid: 185ac60bf562f4be5a9c3bf25589ca42,
     type: 3}
@@ -902,3 +933,4 @@ SceneRoots:
   - {fileID: 1634884636}
   - {fileID: 545786021}
   - {fileID: 1984398921}
+  - {fileID: 286952255}

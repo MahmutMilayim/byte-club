@@ -130,25 +130,27 @@ public class FrameSnapshotApplier : MonoBehaviour
             }
         }
 
-        // 3) Ball
-        if (dto.ball != null && dto.ball.visible && ballPrefab != null)
-        {
-            if (_ballGO == null)
-            {
-                _ballGO = Instantiate(ballPrefab, runtimeRoot);
-                _ballGO.name = "Ball";
-            }
+                // 3) Ball
+                if (dto.ball != null && dto.ball.visible && ballPrefab != null)
+                {
+                    if (_ballGO == null)
+                    {
+                        _ballGO = Instantiate(ballPrefab, runtimeRoot);
+                        _ballGO.name = "Ball";
+                    }
 
-            _ballGO.transform.position = mapper.ToWorld(dto.ball.x, dto.ball.y);
-            _ballGO.SetActive(true);
-        }
-        else
-        {
-            if (_ballGO != null) _ballGO.SetActive(false);
-        }
+                    _ballGO.transform.position = mapper.ToWorld(dto.ball.x, dto.ball.y);
+                    _ballGO.SetActive(true);
+                }
+                else
+                {
+                    if (_ballGO != null) _ballGO.SetActive(false);
+                }
 
-        OnSnapshotApplied?.Invoke(dto);
-        Debug.Log($"Applied snapshot frame {dto.frameIndex} (players: {(dto.players?.Length ?? 0)}, shooter: {shooterId}).");
+                ApplyFacing(dto);
+
+                OnSnapshotApplied?.Invoke(dto);
+                Debug.Log($"Applied snapshot frame {dto.frameIndex} (players: {(dto.players?.Length ?? 0)}, shooter: {shooterId}).");
     }
 
     private GameObject GetOrCreate(int id)
@@ -181,5 +183,53 @@ public class FrameSnapshotApplier : MonoBehaviour
     {
         var existing = player.Find(ShooterMarkerName);
         if (existing != null) Destroy(existing.gameObject);
+    }
+
+    private void ApplyFacing(FrameSnapshotDTO dto)
+    {
+        if (dto == null || dto.shooter == null) return;
+
+        // Shooter world pos
+        Vector3 shooterPos = mapper.ToWorld(dto.shooter.x, dto.shooter.y);
+
+        // Goal center (targetGoal'a göre)
+        string targetGoal = (dto.targetGoal ?? "TOP").Trim().ToUpperInvariant();
+
+        float goalX = 34f; // field center
+        float goalY = (targetGoal == "BOTTOM") ? 0f : 105f;
+
+        Vector3 goalWorld = mapper.ToWorld(goalX, goalY);
+
+        // 1️⃣ Shooter rotation → kaleye dön
+        if (TryGetPlayerAnimationDriver(dto.shooter.playerId, out var shooterDriver))
+        {
+            shooterDriver.FaceTowards(goalWorld);
+        }
+
+        // 2️⃣ Diğer oyuncular → shooter’a dön
+        foreach (var kv in _players)
+        {
+            int id = kv.Key;
+            var go = kv.Value;
+
+            if (go == null) continue;
+            if (id == dto.shooter.playerId) continue;
+
+            var driver = go.GetComponent<PlayerAnimationDriver>();
+            if (driver != null)
+            {
+                driver.FaceTowards(shooterPos);
+            }
+        }
+    }
+    public bool TryGetPlayerAnimationDriver(int playerId, out PlayerAnimationDriver driver)
+    {
+        driver = null;
+
+        if (!_players.TryGetValue(playerId, out var go) || go == null)
+            return false;
+
+        driver = go.GetComponent<PlayerAnimationDriver>();
+        return driver != null;
     }
 }
