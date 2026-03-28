@@ -496,7 +496,6 @@ GameObject:
   m_Component:
   - component: {fileID: 545786021}
   - component: {fileID: 545786020}
-  - component: {fileID: 545786024}
   - component: {fileID: 545786023}
   - component: {fileID: 545786022}
   m_Layer: 0
@@ -520,11 +519,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   frameJson: {fileID: 4900000, guid: 1e99cf67c389e4cfab68c901d60b7882, type: 3}
   mapper: {fileID: 11400000, guid: 5cf94f86a65b641d9968dbe8c9b6c7ff, type: 2}
-  playerPrefab: {fileID: 6172515834124393122, guid: d81170db743014faaa54bae171a59a44,
+  playerPrefab: {fileID: 8619153295762090438, guid: f40dbe9f1a6114de49e0e85a90635b05,
     type: 3}
   ballPrefab: {fileID: 8764435781724101434, guid: 185ac60bf562f4be5a9c3bf25589ca42,
     type: 3}
-  runtimeRoot: {fileID: 1634884636}
+  runtimeRoot: {fileID: 0}
   hideMissingPlayers: 1
   applyOnStart: 1
   markShooter: 1
@@ -576,26 +575,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   applier: {fileID: 545786020}
   config: {fileID: 11400000, guid: 20fb709238c9a4249958df58fb6a4634, type: 2}
+  mapper: {fileID: 11400000, guid: 5cf94f86a65b641d9968dbe8c9b6c7ff, type: 2}
   onlyOpponentsBlockPass: 1
   passBlockRadius: 0.85
   gkPassBlockRadius: 1.2
+  goalSamples: 48
   logResult: 1
---- !u!114 &545786024
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 545786019}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2111e5f9e383a487e8a1e621c7e78261, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  applier: {fileID: 545786020}
-  config: {fileID: 11400000, guid: 20fb709238c9a4249958df58fb6a4634, type: 2}
-  logResult: 1
-  onlyOpponentsBlock: 1
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -797,37 +782,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1241629055}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &1634884635
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1634884636}
-  m_Layer: 0
-  m_Name: FootballRuntime
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1634884636
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1634884635}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1874998268
 GameObject:
   m_ObjectHideFlags: 0
@@ -924,23 +878,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   applier: {fileID: 545786020}
   mapper: {fileID: 11400000, guid: 5cf94f86a65b641d9968dbe8c9b6c7ff, type: 2}
+  bestPassEvaluator: {fileID: 545786023}
   goalWidthMeters: 7.32
   fieldLengthMeters: 105
   fieldWidthMeters: 68
-  opponentBlockRadius: 1.25
+  playerBlockRadius: 1.25
   goalkeeperBlockRadius: 2
-  onlyOpponentsBlock: 1
-  ignoreTeammates: 1
-  drawOpenFillMesh: 1
-  openFillMaterial: {fileID: 2100000, guid: 10935684ef5a54cdc8e1dd37b83fc30b, type: 2}
-  arcSegments: 64
-  fillDistance: 25
-  fillYOffset: 0.06
+  useDecisionFinalShooter: 1
+  goalSamples: 48
+  drawFullGoalMesh: 1
+  fullGoalMaterial: {fileID: 2100000, guid: 10935684ef5a54cdc8e1dd37b83fc30b, type: 2}
+  drawOpenGoalMesh: 1
+  openGoalMaterial: {fileID: 2100000, guid: 2ed3a62f69031466b811338ad09bac55, type: 2}
+  fullFillYOffset: 0.05
+  openFillYOffset: 0.07
   drawGizmos: 1
   shooterToPostColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   blockerCircleColor: {r: 1, g: 0.2, b: 0.2, a: 1}
-  openArcColor: {r: 0.2, g: 1, b: 0.2, a: 1}
-  blockedArcColor: {r: 1, g: 0.4, b: 0.1, a: 1}
+  openSegmentColor: {r: 1, g: 0.55, b: 0.1, a: 1}
+  blockedSegmentColor: {r: 1, g: 0.2, b: 0.2, a: 1}
   rebuildOnSnapshotApplied: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
@@ -951,7 +907,6 @@ SceneRoots:
   - {fileID: 832575519}
   - {fileID: 464005392}
   - {fileID: 1200995946}
-  - {fileID: 1634884636}
   - {fileID: 545786021}
   - {fileID: 1984398921}
   - {fileID: 286952255}

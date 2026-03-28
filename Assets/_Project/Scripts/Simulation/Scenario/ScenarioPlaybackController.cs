@@ -73,10 +73,10 @@ public class ScenarioPlaybackController : MonoBehaviour
         }
 
         // Kararı evaluator versin
-        DecisionResult decision = bestPassEvaluator.Evaluate(dto);
+        DecisionResult decision = bestPassEvaluator.LastResult;
         if (decision == null)
         {
-            Debug.LogWarning("ScenarioPlaybackController: decision result is null.");
+            Debug.LogWarning("ScenarioPlaybackController: decision result is null. Make sure BestPassEvaluator ran before playback.");
             yield break;
         }
 

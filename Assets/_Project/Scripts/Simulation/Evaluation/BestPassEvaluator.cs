@@ -6,16 +6,26 @@ public class BestPassEvaluator : MonoBehaviour
     [Header("Refs")]
     public FrameSnapshotApplier applier;
     public ShotGeometryConfig config;
+    public MetersToWorldMapper mapper;
 
     [Header("Pass rules")]
     public bool onlyOpponentsBlockPass = true;
     public float passBlockRadius = 0.85f;
     public float gkPassBlockRadius = 1.2f;
 
+    [Header("Shot probability sampling")]
+    [Range(10, 120)] public int goalSamples = 48;
+
     [Header("Log")]
     public bool logResult = true;
 
     public DecisionResult LastResult { get; private set; }
+
+    private struct GoalBlocker
+    {
+        public Vector2 pos;
+        public float radius;
+    }
 
     private void OnEnable()
     {
@@ -38,9 +48,9 @@ public class BestPassEvaluator : MonoBehaviour
 
     public DecisionResult Evaluate(FrameSnapshotDTO dto)
     {
-        if (dto == null || dto.shooter == null || config == null)
+        if (dto == null || dto.shooter == null || config == null || mapper == null)
         {
-            Debug.LogWarning("BestPassEvaluator: missing dto/shooter/config.");
+            Debug.LogWarning("BestPassEvaluator: missing dto/shooter/config/mapper.");
             LastResult = null;
             return null;
         }
@@ -49,7 +59,7 @@ public class BestPassEvaluator : MonoBehaviour
         int shooterId = dto.shooter.playerId;
         Vector2 shooterPos = new Vector2(dto.shooter.x, dto.shooter.y);
 
-        float shooterOpen = EvaluateShotAt(dto, shooterPos, shooterId);
+        float shooterOpen = ComputeShotProbabilityForPosition(dto, shooterPos, shooterId);
 
         var result = new DecisionResult
         {
@@ -88,9 +98,7 @@ public class BestPassEvaluator : MonoBehaviour
 
                 if (passClear)
                 {
-                    // Bu teammate yeni shooter kabul ediliyor.
-                    // O yüzden şut hesabında sadece o oyuncu blocker olmayacak.
-                    float teammateOpen = EvaluateShotAt(dto, teammatePos, p.id);
+                    float teammateOpen = ComputeShotProbabilityForPosition(dto, teammatePos, p.id);
                     option.shotOpenRatio = teammateOpen;
 
                     if (teammateOpen > bestReceiverOpen)
@@ -118,7 +126,7 @@ public class BestPassEvaluator : MonoBehaviour
         }
 
         // Yeni karar kuralı:
-        // Eğer en iyi temiz pas opsiyonu shooter'dan daha iyi ise PASS
+        // Eğer en iyi temiz pas opsiyonu shooter'dan daha iyiyse PASS
         if (bestReceiverId != -1 && bestReceiverOpen > shooterOpen)
         {
             result.usePass = true;
@@ -138,9 +146,7 @@ public class BestPassEvaluator : MonoBehaviour
             {
                 if (bestReceiverId == -1)
                 {
-                    Debug.Log(
-                        $"[PASS] frame={dto.frameIndex} shooterOpen={shooterPct:F1}% bestPass=NONE decision=SHOT"
-                    );
+                    Debug.Log($"[PASS] frame={dto.frameIndex} shooterOpen={shooterPct:F1}% bestPass=NONE decision=SHOT");
                 }
                 else
                 {
@@ -164,44 +170,71 @@ public class BestPassEvaluator : MonoBehaviour
         return result;
     }
 
-    private float EvaluateShotAt(FrameSnapshotDTO dto, Vector2 shooterPos, int shooterPlayerId)
+    public float ComputeShotProbabilityForPosition(FrameSnapshotDTO dto, Vector2 shooterPos, int shooterId)
     {
+        if (dto == null || config == null || mapper == null)
+            return 0f;
+
         string targetGoal = (dto.targetGoal ?? "TOP").Trim().ToUpperInvariant();
         float goalY = (targetGoal == "BOTTOM") ? 0f : config.fieldLength;
 
-        Vector2 leftPost = new Vector2(config.goalCenterX - config.goalHalfWidth, goalY);
-        Vector2 rightPost = new Vector2(config.goalCenterX + config.goalHalfWidth, goalY);
+        Vector2 goalLeft = new Vector2(config.goalCenterX - config.goalHalfWidth, goalY);
+        Vector2 goalRight = new Vector2(config.goalCenterX + config.goalHalfWidth, goalY);
 
-        var blockers = BuildShotBlockers(dto, shooterPlayerId);
-        var res = ShotOpennessEvaluator.Evaluate(shooterPos, leftPost, rightPost, blockers);
+        List<GoalBlocker> blockers = BuildShotBlockers(dto, shooterId);
 
-        return res.openRatio;
+        int openCount = 0;
+
+        for (int i = 0; i < goalSamples; i++)
+        {
+            float t = (i + 0.5f) / goalSamples;
+            Vector2 target = Vector2.Lerp(goalLeft, goalRight, t);
+
+            if (!IsBlocked(shooterPos, target, blockers))
+                openCount++;
+        }
+
+        int blockedCount = goalSamples - openCount;
+        int totalCount = openCount + blockedCount;
+
+        if (totalCount <= 0)
+            return 0f;
+
+        float probability = (float)openCount / totalCount;
+
+        if (logResult)
+        {
+            Debug.Log(
+                $"[SHOT-PROB] shooterId={shooterId} open={openCount} blocked={blockedCount} total={totalCount} prob={probability:P1}"
+            );
+        }
+
+        return probability;
     }
 
-    private List<ShotOpennessEvaluator.Blocker> BuildShotBlockers(FrameSnapshotDTO dto, int shooterPlayerId)
+    private List<GoalBlocker> BuildShotBlockers(FrameSnapshotDTO dto, int shooterId)
     {
-        var blockers = new List<ShotOpennessEvaluator.Blocker>(32);
+        var blockers = new List<GoalBlocker>(32);
 
-        // Goalkeeper her durumda blocker olabilir, ama shooter'ın kendisi ise ekleme
-        if (dto.goalkeeper != null && dto.goalkeeper.playerId != shooterPlayerId)
+        // Goalkeeper blocker
+        if (dto.goalkeeper != null && dto.goalkeeper.playerId != shooterId)
         {
-            blockers.Add(new ShotOpennessEvaluator.Blocker
+            blockers.Add(new GoalBlocker
             {
                 pos = new Vector2(dto.goalkeeper.x, dto.goalkeeper.y),
                 radius = config.gkBlockRadius
             });
         }
 
-        // players[] içindeki HERKES blocker olabilir
-        // Tek istisna: o anki shooter'ın kendisi
+        // Shooter hariç herkes blocker
         if (dto.players != null)
         {
             foreach (var p in dto.players)
             {
                 if (p == null) continue;
-                if (p.id == shooterPlayerId) continue;
+                if (p.id == shooterId) continue;
 
-                blockers.Add(new ShotOpennessEvaluator.Blocker
+                blockers.Add(new GoalBlocker
                 {
                     pos = new Vector2(p.x, p.y),
                     radius = config.playerBlockRadius
@@ -210,6 +243,23 @@ public class BestPassEvaluator : MonoBehaviour
         }
 
         return blockers;
+    }
+
+    private bool IsBlocked(Vector2 shooterPos, Vector2 targetPos, List<GoalBlocker> blockers)
+    {
+        for (int i = 0; i < blockers.Count; i++)
+        {
+            if (ShotOpennessEvaluator_SegmentCircle.SegmentIntersectsCircle(
+                    shooterPos,
+                    targetPos,
+                    blockers[i].pos,
+                    blockers[i].radius))
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private bool IsPassClear(FrameSnapshotDTO dto, Vector2 from, Vector2 to, string shooterTeamId)
@@ -228,8 +278,14 @@ public class BestPassEvaluator : MonoBehaviour
                 if ((new Vector2(p.x, p.y) - to).sqrMagnitude < 0.0001f)
                     continue;
 
-                if (ShotOpennessEvaluator_SegmentCircle.SegmentIntersectsCircle(from, to, new Vector2(p.x, p.y), passBlockRadius))
+                if (ShotOpennessEvaluator_SegmentCircle.SegmentIntersectsCircle(
+                        from,
+                        to,
+                        new Vector2(p.x, p.y),
+                        passBlockRadius))
+                {
                     return false;
+                }
             }
         }
 
@@ -237,8 +293,14 @@ public class BestPassEvaluator : MonoBehaviour
         {
             if (!onlyOpponentsBlockPass || dto.goalkeeper.teamId != shooterTeamId)
             {
-                if (ShotOpennessEvaluator_SegmentCircle.SegmentIntersectsCircle(from, to, new Vector2(dto.goalkeeper.x, dto.goalkeeper.y), gkPassBlockRadius))
+                if (ShotOpennessEvaluator_SegmentCircle.SegmentIntersectsCircle(
+                        from,
+                        to,
+                        new Vector2(dto.goalkeeper.x, dto.goalkeeper.y),
+                        gkPassBlockRadius))
+                {
                     return false;
+                }
             }
         }
 
