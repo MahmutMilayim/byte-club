@@ -8,6 +8,7 @@ public class ShotVisualizationController : MonoBehaviour
     public FrameSnapshotApplier applier;
     public MetersToWorldMapper mapper;
     public BestPassEvaluator bestPassEvaluator;
+    public ShotGeometryConfig config;
 
     [Header("Goal (meters)")]
     public float goalWidthMeters = 7.32f;
@@ -161,12 +162,17 @@ public class ShotVisualizationController : MonoBehaviour
         comp.shooterM = shooterMeters;
         comp.shooterW = mapper.ToWorld(shooterMeters.x, shooterMeters.y);
 
-        string targetGoal = (dto.targetGoal ?? "TOP").Trim().ToUpperInvariant();
-        float goalY = (targetGoal == "BOTTOM") ? 0f : fieldLengthMeters;
+        if (config == null)
+{
+    Debug.LogWarning("ShotVisualizationController: config missing.");
+    return comp;
+}
 
-        float goalCenterX = fieldWidthMeters * 0.5f;
-        float halfGoal = goalWidthMeters * 0.5f;
+string targetGoal = (dto.targetGoal ?? "TOP").Trim().ToUpperInvariant();
+float goalY = (targetGoal == "BOTTOM") ? 0f : config.fieldLength;
 
+float goalCenterX = config.goalCenterX;
+float halfGoal = config.goalHalfWidth;
         float leftX = goalCenterX - halfGoal;
         float rightX = goalCenterX + halfGoal;
 
@@ -184,7 +190,7 @@ public class ShotVisualizationController : MonoBehaviour
                 comp.blockers.Add(new Blocker
                 {
                     posWorld = mapper.ToWorld(p.x, p.y),
-                    radiusMeters = playerBlockRadius,
+                    radiusMeters = config.playerBlockRadius,
                     label = $"P_{p.id}"
                 });
             }
@@ -195,7 +201,7 @@ public class ShotVisualizationController : MonoBehaviour
             comp.blockers.Add(new Blocker
             {
                 posWorld = mapper.ToWorld(dto.goalkeeper.x, dto.goalkeeper.y),
-                radiusMeters = goalkeeperBlockRadius,
+                radiusMeters = config.gkBlockRadius,
                 label = $"GK_{dto.goalkeeper.playerId}"
             });
         }

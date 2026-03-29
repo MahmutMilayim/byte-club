@@ -31,24 +31,25 @@ public class BallPlaybackController : MonoBehaviour
     }
 
     public void SnapBallInFrontOfPlayer(Transform playerTransform)
-    {
-        GameObject ball = GetBallObject();
-        if (ball == null || playerTransform == null)
-            return;
+{
+    GameObject ball = GetBallObject();
+    if (ball == null || playerTransform == null)
+        return;
 
-        Vector3 forward = playerTransform.forward;
-        forward.y = 0f;
-        if (forward.sqrMagnitude < 0.0001f)
-            forward = Vector3.forward;
+    Vector3 forward = playerTransform.forward;
+    forward.y = 0f;
 
-        forward.Normalize();
+    if (forward.sqrMagnitude < 0.0001f)
+        forward = Vector3.forward;
 
-        Vector3 pos = playerTransform.position + forward * forwardOffset;
-        pos.y += ballHeightOffset;
+    forward.Normalize();
 
-        ball.transform.position = pos;
-        ball.SetActive(true);
-    }
+    Vector3 pos = playerTransform.position + forward * forwardOffset;
+    pos.y = playerTransform.position.y + ballHeightOffset;
+
+    ball.transform.position = pos;
+    ball.SetActive(true);
+}
 
     public void PlayPass(Vector3 fromWorld, Vector3 toWorld)
     {

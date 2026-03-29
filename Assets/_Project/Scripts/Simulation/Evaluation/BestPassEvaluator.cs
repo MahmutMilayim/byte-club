@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System.Collections.Generic;
+using System.Linq;
 
 public class BestPassEvaluator : MonoBehaviour
 {
@@ -337,6 +339,46 @@ public class BestPassEvaluator : MonoBehaviour
 
     int randomIndex = Random.Range(0, openTargets.Count);
     targetMeters = openTargets[randomIndex];
+    Debug.Log($"[OPEN-TARGET] shooterId={shooterId} chosenTarget=({targetMeters.x:F2}, {targetMeters.y:F2}) openCount={openTargets.Count}");
     return true;
+}
+public List<ShotScoreEntry> GetTopScoreEntries(int maxCount = 5)
+{
+    var result = new List<ShotScoreEntry>();
+
+    if (LastResult == null)
+        return result;
+
+    // İlk shooter
+    result.Add(new ShotScoreEntry
+    {
+        playerId = LastResult.initialShooterId,
+        isInitialShooter = true,
+        passClear = true,
+        scorePercent = LastResult.initialShooterOpenRatio * 100f
+    });
+
+    // Receiver adayları
+    if (LastResult.passOptions != null)
+    {
+        foreach (var option in LastResult.passOptions)
+        {
+            if (!option.passClear)
+                continue;
+
+            result.Add(new ShotScoreEntry
+            {
+                playerId = option.receiverId,
+                isInitialShooter = false,
+                passClear = option.passClear,
+                scorePercent = option.shotOpenRatio * 100f
+            });
+        }
+    }
+
+    return result
+        .OrderByDescending(x => x.scorePercent)
+        .Take(maxCount)
+        .ToList();
 }
 }

@@ -9,11 +9,14 @@ public class ScenarioPlaybackController : MonoBehaviour
     public ShotGeometryConfig config;
     public BestPassEvaluator bestPassEvaluator;
     public BallPlaybackController ballPlaybackController;
+    public ShotCameraController shotCameraController;
+    public ShotScorePanelController shotScorePanelController;
 
     [Header("Timing")]
     public float preActionDelay = 0.35f;
     public float passToShootDelay = 0.9f;
     public float resetDelay = 1.0f;
+    public float cameraTransitionDuration = 0.45f;
 
     [Header("Debug")]
     public bool playOnSnapshotApplied = true;
@@ -81,6 +84,9 @@ public class ScenarioPlaybackController : MonoBehaviour
             Debug.LogWarning("ScenarioPlaybackController: decision result is null. Make sure BestPassEvaluator ran before playback.");
             yield break;
         }
+
+        if (shotScorePanelController != null)
+        shotScorePanelController.Refresh();
 
         yield return new WaitForSeconds(preActionDelay);
 
@@ -163,6 +169,16 @@ if (ballPlaybackController != null)
 {
     Vector3 ballFrom = shooterDriver.transform.position + shooterDriver.transform.forward * 0.55f;
     ballPlaybackController.PlayPass(ballFrom, receiverWorld);
+}
+
+// Yeni shooter receiver olacağı için kamera da smooth şekilde ona geçsin
+if (shotCameraController != null)
+{
+    shotCameraController.SmoothAlignToShooterPosition(
+        decision.passReceiverMeters,
+        dto.targetGoal,
+        cameraTransitionDuration
+    );
 }
 
 yield return new WaitForSeconds(passToShootDelay);
