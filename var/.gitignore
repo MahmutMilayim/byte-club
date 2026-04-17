@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+
+# Environments
+.env
+*.env
+venv/
+.venv/
+env/
+
+# Project Directories
+database/
+assets/*.mp4
+assets/*.mov
+assets/*.avi
+assets/*.webm
+tests/__pycache__/
+
+# Output/Logs
+rag_output.txt
+rag_output_full.txt
+
+# Editor & OS
+.vscode/
+.idea/
+*.DS_Store
+Thumbs.db

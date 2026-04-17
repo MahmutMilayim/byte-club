@@ -1,0 +1,1189 @@
+{
+  "_meta": {
+    "version": "1.0",
+    "description": "Multi-layer Turkish football commentary template bank",
+    "structure": {
+      "intent": [
+        "build_up",
+        "counter",
+        "probe",
+        "overload",
+        "transition"
+      ],
+      "zone": [
+        "own_half",
+        "mid_field",
+        "final_third",
+        "box_edge"
+      ],
+      "outcome": [
+        "continues",
+        "shot",
+        "goal",
+        "loss",
+        "foul",
+        "corner"
+      ],
+      "duration_range": [
+        "short (1-2s)",
+        "medium (2-3s)",
+        "long (3-4s)"
+      ],
+      "tone": [
+        "excited",
+        "excited",
+        "intense",
+        "neutral",
+        "calm",
+        "tense",
+        "praise",
+        "critical",
+        "disappointed"
+      ],
+      "tone_descriptions": {
+        "excited": "🎉 Gôl çığlığı - en yoğun heyecan, bağırma",
+        "intense": "⚡ Yoğun - son dakika, kritik anlar",
+        "neutral": "📻 Normal - build-up, paslaşma",
+        "calm": "🧘 Sakin - replay, analiz anları",
+        "tense": "😰 Gergin - tehlikeli anlar, defans",
+        "praise": "👏 Övgü - güzel paslar, iyi oyun",
+        "critical": "😤 Eleştirel - kötü paslar, hatalar",
+        "disappointed": "😞 Hayal kırıklığı - kaçan gôl, direk"
+      }
+    },
+    "slots": {
+      "{team}": "Takım adı",
+      "{player}": "Oyuncu (opsiyonel)",
+      "{pass_count}": "Pas sayısı",
+      "{zone}": "Bölge adı"
+    }
+  },
+  "build_up": {
+    "own_half": {
+      "continues": {
+        "short": [
+          {
+            "text": "Kendi sahalarından paslaşarak top çıkarmaya çalışıyorlar.",
+            "duration": 3.4,
+            "tone": "neutral",
+            "id": "build_up_own_half_continues_short_001"
+          },
+          {
+            "text": "Rakip yarı saha içerisinde boşluk arıyorlar.",
+            "duration": 2.6,
+            "tone": "neutral",
+            "id": "build_up_own_half_continues_short_002"
+          },
+          {
+            "text": "{team} sabırlı bir şekilde topu döndürerek oyun kurmaya çalışıyor.",
+            "duration": 3.3,
+            "tone": "neutral",
+            "id": "build_up_own_half_continues_short_003"
+          }
+        ],
+        "medium": [
+          {
+            "text": "{team} kendi sahasında topa sahip çıkıyor.",
+            "duration": 3.4,
+            "tone": "neutral",
+            "id": "build_up_own_half_continues_medium_004"
+          },
+          {
+            "text": "Taktik disiplinlerini koruyarak hazırlık paslarına devam ediyorlar.",
+            "duration": 3.6,
+            "tone": "neutral",
+            "id": "build_up_own_half_continues_medium_005"
+          },
+          {
+            "text": "Oyunun kontrolü {team}'da, defanstan kontrollü çıkıyorlar.",
+            "duration": 3.2,
+            "tone": "neutral",
+            "id": "build_up_own_half_continues_medium_006"
+          },
+          {
+            "text": "Defanstan kontrollü bir çıkış, baskı gelmeyince paslaşmalar arttı.",
+            "duration": 3.9,
+            "tone": "neutral",
+            "id": "build_up_own_half_continues_medium_007"
+          },
+          {
+            "text": "{team} kendi sahasında topa sahip, acele etmeden set oyununa yerleşmeye çalışıyorlar.",
+            "duration": 4.5,
+            "tone": "neutral",
+            "id": "build_up_own_half_continues_medium_009"
+          }
+        ],
+        "long": [
+          {
+            "text": "{team} oyunu arkadan kuruyor, hiç acele etmiyorlar.",
+            "duration": 3.5,
+            "tone": "neutral",
+            "id": "build_up_own_half_continues_long_007"
+          },
+          {
+            "text": "Maçın başından beri meşin yuvarlak {team}'ın hakimiyetinde.",
+            "duration": 3.8,
+            "tone": "neutral",
+            "id": "build_up_own_half_continues_long_006"
+          },
+          {
+            "text": "Sağlı sollu paslaşmalarla rakip yarı alana geçmeye çalışıyorlar.",
+            "duration": 4.1,
+            "tone": "neutral",
+            "id": "build_up_own_half_continues_long_008"
+          },
+          {
+            "text": "Taktik disiplinlerini koruyarak hazırlık paslarına devam ediyorlar.",
+            "duration": 3.6,
+            "tone": "neutral",
+            "id": "build_up_own_half_continues_long_011"
+          }
+        ]
+      },
+      "loss": {
+        "short": [
+          {
+            "text": "Bir top kaybı geliyor!",
+            "duration": 1.3,
+            "tone": "critical",
+            "id": "build_up_own_half_loss_short_009"
+          },
+          {
+            "text": "Tehlikeli olabilecek bir noktada kayıp geldi!",
+            "duration": 1.9,
+            "tone": "tense",
+            "id": "build_up_own_half_loss_short_010"
+          }
+        ],
+        "medium": [
+          {
+            "text": "Arkada top kaybettiler, tehlikeli olabilir!",
+            "duration": 3.4,
+            "tone": "critical",
+            "id": "build_up_own_half_loss_medium_011"
+          }
+        ]
+      }
+    },
+    "mid_field": {
+      "continues": {
+        "short": [
+          {
+            "text": "Oyuncular kendi arasında topla oynuyor.",
+            "duration": 3.0,
+            "tone": "neutral",
+            "id": "build_up_mid_field_continues_short_012"
+          },
+          {
+            "text": "Kontrollü bir şekilde paslaşmalar devam ediyor.",
+            "duration": 3.1,
+            "tone": "neutral",
+            "id": "build_up_mid_field_continues_short_013"
+          },
+          {
+            "text": "Top orta alanda dolaşıyor.",
+            "duration": 1.9,
+            "tone": "neutral",
+            "id": "build_up_mid_field_continues_short_014"
+          },
+          {
+            "text": "Rakip pas kanallarını kapatmaya çalışıyor ancak geriye dönüyor.",
+            "duration": 2.9,
+            "tone": "neutral",
+            "id": "build_up_mid_field_continues_short_017"
+          }
+        ],
+        "medium": [
+          {
+            "text": "{team} rakip sahaya yakın bölgede oyunu kontrol ediyor.",
+            "duration": 6.2,
+            "tone": "neutral",
+            "id": "build_up_mid_field_continues_medium_014"
+          },
+          {
+            "text": "Sabırla top döndürüyorlar, rakip sahada boşluk arıyorlar.",
+            "duration": 3.6,
+            "tone": "neutral",
+            "id": "build_up_mid_field_continues_medium_015"
+          },
+          {
+            "text": "Pas trafiği şuanlık ikinci bölgede devam ediyor.",
+            "duration": 2.9,
+            "tone": "neutral",
+            "id": "build_up_mid_field_continues_medium_016"
+          },
+          {
+            "text": "Yan paslarla derinlemesine bir pas arayışındalar.",
+            "duration": 3.2,
+            "tone": "neutral",
+            "id": "build_up_mid_field_continues_medium_022"
+          }
+        ],
+        "long": [
+          {
+            "text": "{team} oyunu kontrol ediyor, dar alanda kısa paslaşmalar üçgenlerle boşluk arıyorlar.",
+            "duration": 6.3,
+            "tone": "praise",
+            "id": "build_up_mid_field_continues_long_017"
+          },
+          {
+            "text": "Orta saha hakimiyeti {team}'de, rakip savunmaya baskı kuruyorlar.",
+            "duration": 5.3,
+            "tone": "praise",
+            "id": "build_up_mid_field_continues_long_018"
+          },
+          {
+            "text": "Çok kaliteli ayaklarla birkaç dakikadır topu döndürüyorlar.",
+            "duration": 3.4,
+            "tone": "praise",
+            "id": "build_up_mid_field_continues_long_019"
+          },
+          {
+            "text": "Pas trafiği yoğun bir şekilde devam ediyor, sabırla fırsat kolluyorlar.",
+            "duration": 6.2,
+            "tone": "neutral",
+            "id": "build_up_mid_field_continues_long_021"
+          },
+          {
+            "text": "{team} rakibe nefes aldırmıyor, topun sahibi olmaya devam ediyorlar.",
+            "duration": 5.4,
+            "tone": "praise",
+            "id": "build_up_mid_field_continues_long_024"
+          },
+          {
+            "text": "Müthiş bir mücadele oluyor gerçekten, iki teknik direktör arasında taktik savaşları devam ediyor.",
+            "duration": 3.9,
+            "tone": "excited",
+            "id": "build_up_mid_field_continues_long_027"
+          },
+          {
+            "text": "Genel anlamda yüksek tempolu bir oyun izliyoruz.",
+            "duration": 2.8,
+            "tone": "neutral",
+            "id": "build_up_mid_field_continues_long_028"
+          },
+          {
+            "text": "{team} baskıya devam ediyor, rakip savunmayı dengesiz yakalamak istiyorlar.",
+            "duration": 4.4,
+            "tone": "neutral",
+            "id": "build_up_mid_field_continues_long_030"
+          },
+          {
+            "text": "Nefes nefese bir mücadele izliyoruz, tempo yüksek.",
+            "duration": 2.9,
+            "tone": "intense",
+            "id": "build_up_mid_field_continues_long_032"
+          },
+          {
+            "text": "Sağlı sollu paslarla ilerliyor {team}, boşluk arıyorlar.",
+            "duration": 3.3,
+            "tone": "neutral",
+            "id": "build_up_mid_field_continues_long_033"
+          }
+        ]
+      },
+      "shot": {
+        "medium": [
+          {
+            "text": "{team} uzaktan kaleyi yokluyor!!! etkili şut denemesi!!!",
+            "text": "{team} uzaktan kaleyi yokluyor!!! etkili şut denemesi!!!",
+            "duration": 3.1,
+            "tone": "excited",
+            "id": "build_up_mid_field_shot_medium_021"
+          },
+          {
+            "text": "Paslaşmalar sonucunda etkili bir şutla kaleyi yokluyorlar!!!",
+            "duration": 2.6,
+            "tone": "excited",
+            "id": "build_up_mid_field_shot_medium_022"
+          }
+        ],
+        "long": [
+          {
+            "text": "Şut geliyor!!! Olsun artık bu atak!!! gôl olsun!!!",
+            "duration": 4.4,
+            "tone": "excited",
+            "id": "build_up_mid_field_shot_long_023"
+          },
+          {
+            "text": "Güzel bir oyun kurulumu!!! şutla sonuçlandı!!!",
+            "duration": 3.2,
+            "tone": "excited",
+            "id": "build_up_mid_field_shot_long_024"
+          }
+        ]
+      }
+    }
+  },
+  "counter": {
+    "mid_field": {
+      "continues": {
+        "medium": [
+          {
+            "text": "{team} hızlı çıkıyor, kontra atak başlıyor! Haydi çocuklar!",
+            "duration": 3.6,
+            "tone": "excited",
+            "id": "counter_mid_field_continues_medium_025"
+          },
+          {
+            "text": "Topu kaptılar, hızla ilerliyorlar! Eksik yakalandılar!",
+            "duration": 2.3,
+            "tone": "excited",
+            "id": "counter_mid_field_continues_medium_026"
+          },
+          {
+            "text": "Top kaybı sonrasında boşluk yakaladılar, kontra başladı!",
+            "duration": 3.2,
+            "tone": "excited",
+            "id": "counter_mid_field_continues_medium_027"
+          },
+                    {
+            "text": "Orta alanda kazanılan toplar hızlı çıkmak adına büyük fırsat.",
+            "duration": 3.2,
+            "tone": "neutral",
+            "id": "build_up_mid_field_continues_long_025"
+          }
+        ]
+      }
+    },
+    "final_third": {
+      "continues": {
+        "short": [
+          {
+            "text": "Tehlike büyüyor!",
+            "duration": 1.1,
+            "tone": "excited",
+            "id": "counter_final_third_continues_short_027"
+          },
+          {
+            "text": "Ceza sahası bölgesine girdiler!",
+            "duration": 2.4,
+            "tone": "excited",
+            "id": "counter_final_third_continues_short_028"
+          },
+          {
+            "text": "Gol pozisyonu arıyorlar!",
+            "duration": 1.5,
+            "tone": "excited",
+            "id": "counter_final_third_continues_short_030"
+          }
+        ],
+        "medium": [
+          {
+            "text": "{team} kontra ile topu rakip ceza sahasına taşıdı!",
+            "duration": 3.7,
+            "tone": "excited",
+            "id": "counter_final_third_continues_medium_029"
+          },
+          {
+            "text": "Kalabalık geldiler, hızlıca rakip sahada ilerliyorlar!",
+            "duration": 3.7,
+            "tone": "excited",
+            "id": "counter_final_third_continues_medium_030"
+          },
+          {
+            "text": "Savunma dengesiz yakalandı, büyük fırsat!",
+            "duration": 2.6,
+            "tone": "excited",
+            "id": "counter_final_third_continues_medium_031"
+          },
+          {
+            "text": "Karşı karşıya kaldılar, bu büyük şans!",
+            "duration": 2.4,
+            "tone": "excited",
+            "id": "counter_final_third_continues_medium_032"
+          },
+          {
+            "text": "Son anda kaleci çıktı, tehlike devam ediyor!",
+            "duration": 2.8,
+            "tone": "tense",
+            "id": "counter_final_third_continues_medium_033"
+          }
+        ]
+      },
+      "shot": {
+        "medium": [
+          {
+            "text": "Kontra şutla bitti!!!",
+            "duration": 1.7,
+            "tone": "excited",
+            "id": "counter_final_third_shot_medium_033"
+          },
+          {
+            "text": "{team} kaleyi yokluyor!!!",
+            "duration": 2.1,
+            "tone": "excited",
+            "id": "counter_final_third_shot_medium_034"
+          },
+          {
+            "text": "Hızlı bir şut!!! Kaleci son anda parmaklarının ucuyla uzandı!!!",
+            "duration": 3.3,
+            "tone": "excited",
+            "id": "counter_final_third_shot_medium_035"
+          }
+        ]
+      }
+    },
+    "box_edge": {
+      "shot": {
+        "medium": [
+          {
+            "text": "Ceza sahası içinden şut!!! Kaleci uzandı!!!",
+            "duration": 3.1,
+            "tone": "excited",
+            "id": "counter_box_edge_shot_medium_037"
+          },
+          {
+            "text": "{team} vuruyor!!! Tehlikeli bir noktadan kaleyi yokladı!!!",
+            "duration": 3.9,
+            "tone": "excited",
+            "id": "counter_box_edge_shot_medium_038"
+          },
+          {
+            "text": "Son anda bir müdahale!!! inanılmaz kurtarış!!!",
+            "duration": 2.5,
+            "tone": "excited",
+            "id": "counter_box_edge_shot_medium_040"
+          }
+        ]
+      },
+      "goal": {
+        "short": [
+          {
+            "text": "Gôôl!!!",
+            "duration": 0.7,
+            "tone": "excited",
+            "id": "counter_box_edge_goal_short_039"
+          },
+          {
+            "text": "Top ağlarda!!!",
+            "duration": 1.1,
+            "tone": "excited",
+            "id": "counter_box_edge_goal_short_040"
+          }
+        ],
+        "medium": [
+          {
+            "text": "Gôôl!!! {team} kontra ile gôlü buldu!!!",
+            "duration": 3.2,
+            "tone": "excited",
+            "id": "counter_box_edge_goal_medium_041"
+          },
+          {
+            "text": "Müthiş bir kontra atak organizasyonu ve Gôôl!!! top ağlarla buluşuyor!!!",
+            "duration": 3.3,
+            "tone": "excited",
+            "id": "counter_box_edge_goal_medium_042"
+          }
+        ],
+        "long": [
+          {
+            "text": "Gôôl!!! {team} harika bir kontra ile ağları sarstı!!! Nefis bir gôl!!!",
+            "duration": 4.3,
+            "tone": "excited",
+            "id": "counter_box_edge_goal_long_043"
+          },
+          {
+            "text": "İnanılmaz!!! Kontra gôlü!!! Savunma çaresiz kaldı!!! muhteşem!!!",
+            "duration": 3.5,
+            "tone": "excited",
+            "id": "counter_box_edge_goal_long_044"
+          }
+        ]
+      }
+    }
+  },
+  "probe": {
+    "final_third": {
+      "continues": {
+        "short": [
+          {
+            "text": "Pozisyon arıyorlar.",
+            "duration": 1.7,
+            "tone": "tense",
+            "id": "probe_final_third_continues_short_045"
+          },
+          {
+            "text": "Rakipte boşluk arıyorlar.",
+            "duration": 2.1,
+            "tone": "tense",
+            "id": "probe_final_third_continues_short_046"
+          },
+          {
+            "text": "Ceza alanına sokuluyor!",
+            "duration": 1.5,
+            "tone": "excited",
+            "id": "probe_final_third_continues_short_047"
+          },
+          {
+            "text": "Tehlike büyüyor!",
+            "duration": 1.1,
+            "tone": "excited",
+            "id": "probe_final_third_continues_short_048"
+          }
+        ],
+        "medium": [
+          {
+            "text": "{team} final bölgesinde topu dolaştırıyor, pozisyon arıyorlar.",
+            "duration": 5.7,
+            "tone": "tense",
+            "id": "probe_final_third_continues_medium_047"
+          },
+          {
+            "text": "Ceza sahası çevresinde pas trafiği artıyor, açık kapı arıyorlar.",
+            "duration": 5.2,
+            "tone": "tense",
+            "id": "probe_final_third_continues_medium_048"
+          },
+          {
+            "text": "Rakip savunma bölgesinde skoru değiştirmek için boşluk arıyorlar.",
+            "duration": 4.6,
+            "tone": "tense",
+            "id": "probe_final_third_continues_medium_049"
+          },
+          {
+            "text": "Derinlemesine bir pas, savunma arkasına koşu var.",
+            "duration": 4.6,
+            "tone": "excited",
+            "id": "probe_final_third_continues_medium_052"
+          },
+          {
+            "text": "Son anda müdahale, tehlike devam ediyor.",
+            "duration": 2.6,
+            "tone": "tense",
+            "id": "probe_final_third_continues_medium_053"
+          }
+        ],
+        "long": [
+          {
+            "text": "{team} sabırla ceza sahası çevresinde fırsat kolluyor, boşluk arıyorlar.",
+            "duration": 4.7,
+            "tone": "tense",
+            "id": "probe_final_third_continues_long_050"
+          },
+          {
+            "text": "Birkaç pas üst üste yaparak kilidi açmaya çalışıyorlar.",
+            "duration": 4.5,
+            "tone": "tense",
+            "id": "probe_final_third_continues_long_051"
+          },
+          {
+            "text": "Tek toplarla atak kuruyorlar, savunmanın dengesini bozmaya çalışıyorlar.",
+            "duration": 3.9,
+            "tone": "excited",
+            "id": "probe_final_third_continues_long_052"
+          },
+          {
+            "text": "Organize bir atak, {team} ceza alanını zorluyor.",
+            "duration": 3.7,
+            "tone": "excited",
+            "id": "probe_final_third_continues_long_053"
+          }
+        ]
+      },
+      "shot": {
+        "short": [
+          {
+            "text": "Şut!!!",
+            "duration": 0.7,
+            "tone": "excited",
+            "id": "probe_final_third_shot_short_001"
+          },
+          {
+            "text": "Vuruyor!!!",
+            "duration": 0.8,
+            "tone": "excited",
+            "id": "probe_final_third_shot_short_002"
+          }
+        ],
+        "medium": [
+          {
+            "text": "Sert bir şut geldi!!!",
+            "duration": 1.7,
+            "tone": "excited",
+            "id": "probe_final_third_shot_medium_052"
+          },
+          {
+            "text": "Açık buldular mı? Şut!!!",
+            "duration": 1.8,
+            "tone": "excited",
+            "id": "probe_final_third_shot_medium_053"
+          },
+          {
+            "text": "Uzaklardan sert bir şut; ve kaleci kurtardı!!!",
+            "duration": 2.5,
+            "tone": "excited",
+            "id": "probe_final_third_shot_medium_055"
+          }
+        ]
+      }
+    },
+    "box_edge": {
+      "continues": {
+        "short": [
+          {
+            "text": "Ceza sahasında!",
+            "duration": 1.3,
+            "tone": "tense",
+            "id": "probe_box_edge_continues_short_054"
+          },
+          {
+            "text": "Altı pasa kadar geldiler!",
+            "duration": 1.5,
+            "tone": "excited",
+            "id": "probe_box_edge_continues_short_055"
+          }
+        ],
+        "medium": [
+          {
+            "text": "{team} rakip savunmada boşluk arıyorlar! Tehlike büyüyor!",
+            "duration": 4.1,
+            "tone": "excited",
+            "id": "probe_box_edge_continues_medium_056"
+          },
+          {
+            "text": "Kalabalık ceza sahasında pas opsiyonu arıyor.",
+            "duration": 3.5,
+            "tone": "tense",
+            "id": "probe_box_edge_continues_medium_057"
+          }
+        ]
+      },
+      "shot": {
+        "medium": [
+          {
+            "text": "{team} ceza sahasından denedi!!! etkili bir şut geldi!!!",
+            "duration": 2.8,
+            "tone": "excited",
+            "id": "probe_box_edge_shot_medium_060"
+          },
+          {
+            "text": "Yakın mesafeden şut!!! Haydi bu olsun!!!",
+            "duration": 2.5,
+            "tone": "excited",
+            "id": "probe_box_edge_shot_medium_061"
+          }
+        ]
+      },
+      "goal": {
+        "short": [
+          {
+            "text": "Gôôl ne güzel bir vuruş!!!",
+            "duration": 1.1,
+            "tone": "excited",
+            "id": "probe_box_edge_goal_short_062"
+          },
+          {
+            "text": "Şapka çıkarıcaksınız şapka!!! nefis bir gôôl!!!",
+            "duration": 2.0,
+            "tone": "excited",
+            "id": "probe_box_edge_goal_short_063"
+          }
+        ],
+        "medium": [
+          {
+            "text": "Beklenen sonunda oldu ve Gôôlll!!! Nefis bir gôl!!!",
+            "duration": 3.4,
+            "tone": "excited",
+            "id": "probe_box_edge_goal_medium_064"
+          },
+          {
+            "text": "Şut ve Gôôl!!! Harika!!! Ayağına sağlık!!!",
+            "duration": 2.4,
+            "tone": "excited",
+            "id": "probe_box_edge_goal_medium_065"
+          }
+        ],
+        "long": [
+          {
+            "text": "Gôôl!!! Bekledik bunu!!! çok bekledik ve hak ettik!!! {team} harika bir gôle öne geçti!!!",
+            "duration": 5.1,
+            "tone": "excited",
+            "id": "probe_box_edge_goal_long_066"
+          },
+          {
+            "text": "Muhteşem Gôôl!!! İşte bizim çocuklar!!! Hak edilmiş bir gôl!!!",
+            "duration": 5.0,
+            "tone": "excited",
+            "id": "probe_box_edge_goal_long_067"
+          }
+        ]
+      }
+    }
+  },
+  "overload": {
+    "box_edge": {
+      "continues": {
+        "medium": [
+          {
+            "text": "{team} baskıyı artırıyor! Kalabalık geldiler!",
+            "duration": 2.3,
+            "tone": "excited",
+            "id": "overload_box_edge_continues_medium_068"
+          },
+          {
+            "text": "Ceza sahası önünde seri paslaşmalar devam ediyor!",
+            "duration": 2.1,
+            "tone": "tense",
+            "id": "overload_box_edge_continues_medium_069"
+          }
+        ],
+        "long": [
+          {
+            "text": "{team} ceza sahası önüne yüklenmiş, tüm oyuncular hücumda!",
+            "duration": 4.1,
+            "tone": "excited",
+            "id": "overload_box_edge_continues_long_070"
+          },
+          {
+            "text": "Baskı artıyor! Savunma zor durumda, ikinci gôlü arıyorlar!",
+            "duration": 3.4,
+            "tone": "tense",
+            "id": "overload_box_edge_continues_long_071"
+          }
+        ]
+      },
+      "shot": {
+        "medium": [
+          {
+            "text": "Baskı sonuç verdi!!! Şut geldi!!!",
+            "duration": 1.8,
+            "tone": "excited",
+            "id": "overload_box_edge_shot_medium_074"
+          },
+          {
+            "text": "{team} vuruyor!!! Kalabalıktan çıkan bir şut!!!",
+            "duration": 3.1,
+            "tone": "excited",
+            "id": "overload_box_edge_shot_medium_075"
+          }
+        ]
+      }
+    }
+  },
+  "transition": {
+    "_default": {
+      "continues": {
+        "short": [
+          {
+            "text": "Top hakimiyeti {team}'da, rakibin hatasını kovalıyorlar.",
+            "duration": 4.2,
+            "tone": "neutral",
+            "id": "transition_default_continues_short_101"
+          },
+          {
+            "text": "Oyun üstünlüğünü ele almak için topun kontrolünü ellerinde tutuyorlar.",
+            "duration": 3.5,
+            "tone": "neutral",
+            "id": "transition_default_continues_short_102"
+          }
+        ],
+        "medium": [
+          {
+            "text": "Oyuncular kendi aralarında paslaşarak topu 2. bölgeden 3. bölgeye geçirmeye çalışıyorlar.",
+            "duration": 5.2,
+            "tone": "neutral",
+            "id": "transition_default_continues_medium_103"
+          },
+          {
+            "text": "Sabırla top yapıyorlar, oyunun kontrolü {team}'da.",
+            "duration": 3.7,
+            "tone": "neutral",
+            "id": "transition_default_continues_medium_104"
+          },
+          {
+            "text": "Rakip savunma dengesiz, {team} bunu değerlendirmeli.",
+            "duration": 3.0,
+            "tone": "neutral",
+            "id": "transition_default_continues_medium_107"
+          }
+        ]
+      },
+      "shot": {
+        "medium": [
+          {
+            "text": "Etkili bir şut geliyorrrr ama gôl gelmedi!!!",
+            "duration": 2.5,
+            "tone": "excited",
+            "id": "transition_default_shot_medium_107"
+          },
+          {
+            "text": "Güzel ve sert bir şut geldi!!! Kaleye yakın!!!",
+            "duration": 2.3,
+            "tone": "excited",
+            "id": "transition_default_shot_medium_108"
+          },
+          {
+            "text": "{team} kaleyi yokladı!!! maç hareketlenmeye başladı!!!",
+            "duration": 2.8,
+            "tone": "excited",
+            "id": "transition_default_shot_medium_109"
+          }
+        ],
+        "long": [
+          {
+            "text": "Şut!!! {team} kaleyi yokluyor!!! Harika bir şut geldi!!!",
+            "duration": 3.5,
+            "tone": "excited",
+            "id": "transition_default_shot_long_110"
+          },
+          {
+            "text": "{team} uzaktan şansını deniyor!!! Top süzülerek gitti ama gôl olmadı!!!",
+            "duration": 3.8,
+            "tone": "excited",
+            "id": "transition_default_shot_long_111"
+          }
+        ]
+      }
+    }
+  },
+  "outcomes": {
+    "shot_saved": {
+      "short": [
+        {
+          "text": "Sert bir şut!!!",
+          "duration": 1.3,
+          "tone": "excited",
+          "id": "outcomes_shot_saved_short_001"
+        },
+        {
+          "text": "Vuruş!!! Kurtarış!!!",
+          "duration": 1.1,
+          "tone": "excited",
+          "id": "outcomes_shot_saved_short_002"
+        }
+      ],
+      "medium": [
+        {
+          "text": "Şut geldi!!! ama gôl olmadı!!!",
+          "duration": 2.4,
+          "tone": "excited",
+          "id": "outcomes_shot_saved_medium_077"
+        },
+        {
+          "text": "Vuruş geldi!!! Kaleci doğru yerde!!! adeta bir panter gibi!!!",
+          "duration": 2.2,
+          "tone": "excited",
+          "id": "outcomes_shot_saved_medium_078"
+        }
+      ]
+    },
+    "shot_wide": {
+      "short": [
+        {
+          "text": "Şut!!! Dışarı!!!",
+          "duration": 1.0,
+          "tone": "neutral",
+          "id": "outcomes_shot_wide_short_001"
+        },
+        {
+          "text": "Vuruş!!! Aut!!!",
+          "duration": 0.9,
+          "tone": "neutral",
+          "id": "outcomes_shot_wide_short_002"
+        }
+      ],
+      "medium": [
+        {
+          "text": "Şut!!! Ama az farkla dışarı gidiyor!!!",
+          "duration": 2.0,
+          "tone": "neutral",
+          "id": "outcomes_shot_wide_medium_081"
+        },
+        {
+          "text": "Hedefi bulamadı!!! Aut!!! Yaklaştılar ama olmadı!!!",
+          "duration": 1.7,
+          "tone": "neutral",
+          "id": "outcomes_shot_wide_medium_082"
+        }
+      ]
+    },
+    "shot_post": {
+      "short": [
+        {
+          "text": "Şut geliyor!!!!!!",
+          "duration": 1.0,
+          "tone": "excited",
+          "id": "outcomes_shot_post_short_001"
+        },
+        {
+          "text": "Vuruş!!! Direk!!!",
+          "duration": 1.1,
+          "tone": "excited",
+          "id": "outcomes_shot_post_short_002"
+        }
+      ],
+      "medium": [
+        {
+          "text": "Şuuut ve DİREK!!! Az kalsın gôlü buldular!!!",
+          "duration": 2.1,
+          "tone": "excited",
+          "id": "outcomes_shot_post_medium_085"
+        },
+        {
+          "text": "Direkten döndü!!! Çok yakın!!!",
+          "duration": 2.0,
+          "tone": "excited",
+          "id": "outcomes_shot_post_medium_086"
+        }
+      ]
+    },
+    "goal": {
+      "short": [
+        {
+          "text": "Şut ve Top Ağlarda!!!",
+          "duration": 1.1,
+          "tone": "excited",
+          "id": "outcomes_goal_short_088"
+        },
+        {
+          "text": "Güzel bir şut geldi ve gôôl!!! Harika bir vuruş!!!",
+          "duration": 2.0,
+          "tone": "excited",
+          "id": "outcomes_goal_short_089"
+        }
+      ],
+      "medium": [
+        {
+          "text": "Güzel bir şut ve Top ağlara gidiyor!!!",
+          "duration": 2.8,
+          "tone": "excited",
+          "id": "outcomes_goal_medium_093"
+        },
+        {
+          "text": "Çok güzel bir vuruş ve Gôôl!!! Harika bir gol!!!",
+          "duration": 5.1,
+          "tone": "excited",
+          "id": "outcomes_goal_medium_094"
+        }
+      ],
+      "long": [
+        {
+          "text": "Gôôl!!! İnanılmaz!!! {team} ağları sarstı!!! Daha iyi bir başlangıç olamazdı!!!",
+          "duration": 4.2,
+          "tone": "excited",
+          "id": "outcomes_goal_long_095"
+        },
+        {
+          "text": "Gôl Gôl Gôl!!! Tribünler yıkılıyor!!! Harika!!! Mükemmel bir gôl!!!",
+          "duration": 4.3,
+          "tone": "excited",
+          "id": "outcomes_goal_long_096"
+        }
+      ]
+    },
+    "loss": {
+      "short": [
+        {
+          "text": "Top kaybı!",
+          "duration": 0.9,
+          "tone": "critical",
+          "id": "outcomes_loss_short_093"
+        },
+        {
+          "text": "Kaptırdılar! Dikkat!",
+          "duration": 1.0,
+          "tone": "critical",
+          "id": "outcomes_loss_short_094"
+        }
+      ],
+      "medium": [
+        {
+          "text": "{team} topu kaptırdı! Tehlikeli noktada bir kayıp!",
+          "duration": 2.0,
+          "tone": "critical",
+          "id": "outcomes_loss_medium_095"
+        },
+        {
+          "text": "Top kaybı, bu dakikalarda pozisyonu harcıyorlar!",
+          "duration": 1.8,
+          "tone": "neutral",
+          "id": "outcomes_loss_medium_096"
+        }
+      ]
+    },
+    "foul": {
+      "short": [
+        {
+          "text": "Faul!",
+          "duration": 0.7,
+          "tone": "neutral",
+          "id": "outcomes_foul_short_097"
+        },
+        {
+          "text": "Düdük çaldı!",
+          "duration": 0.9,
+          "tone": "neutral",
+          "id": "outcomes_foul_short_098"
+        }
+      ],
+      "medium": [
+        {
+          "text": "{team} faul kazandı. Serbest vuruş kullanılacak.",
+          "duration": 1.5,
+          "tone": "neutral",
+          "id": "outcomes_foul_medium_099"
+        },
+        {
+          "text": "Sert müdahale! Faul verildi, oyun durdu.",
+          "duration": 2.0,
+          "tone": "neutral",
+          "id": "outcomes_foul_medium_100"
+        }
+      ]
+    }
+  },
+  "fillers": {
+    "_description": "Kısa dolgu yorumları - 3 saniyeden fazla boşluk olduğunda kullanılır",
+    "short": [
+      {
+        "text": "Skoru değiştirecek pozisyon arayışı sürüyor.",
+        "duration": 2.16,
+        "tone": "neutral",
+        "id": "filler_short_003"
+      },
+      {
+        "text": "Son birkaç dakikadır rakibi bunaltıyorlar.",
+        "duration": 2.16,
+        "tone": "neutral",
+        "id": "filler_short_005"
+      },
+      {
+        "text": "Şut açısı arıyor.",
+        "duration": 1.14,
+        "tone": "neutral",
+        "id": "filler_short_006"
+      },
+      {
+        "text": "Yine geliyor {team}.",
+        "duration": 1.5,
+        "tone": "neutral",
+        "id": "filler_short_0022"
+      },
+      {
+        "text": "hızlı ve dikkatli oynuyorlar.",
+        "duration": 1,
+        "tone": "neutral",
+        "id": "filler_short_0011"
+      },
+      {
+        "text": "Ev sahibi ekipte pas trafiği yoğunlaşmaya başladı.",
+        "duration": 2.04,
+        "tone": "neutral",
+        "id": "filler_short_007"
+      },
+      {
+        "text": "İki teknik adam arasındaki taktik mücadele sürüyor.",
+        "duration": 2.16,
+        "tone": "neutral",
+        "id": "filler_short_013"
+      }
+    ],
+    "medium": [
+      {
+        "text": "Her iki takım da fırsat kolluyor.",
+        "duration": 2.16,
+        "tone": "neutral",
+        "id": "filler_medium_001"
+      },
+      {
+        "text": "Bu dakikalarda her iki takım da daha dikkatli oynuyor.",
+        "duration": 3.9,
+        "tone": "neutral",
+        "id": "filler_medium_005"
+      },
+      {
+        "text": "Ceza sahası içerisinde kalabalık karşılıyorlar.",
+        "duration": 2.8,
+        "tone": "neutral",
+        "id": "filler_medium_007"
+      },
+      {
+        "text": "Oyun şu an orta alanda yoğunlaşmış durumda.",
+        "duration": 2.5,
+        "tone": "neutral",
+        "id": "filler_medium_008"
+      },
+      {
+        "text": "Taraflar birbirini kolluyorlar.",
+        "duration": 1.8,
+        "tone": "neutral",
+        "id": "filler_medium_009"
+      },
+      {
+        "text": "Paslaşmalar devam ediyor.",
+        "duration": 1.5,
+        "tone": "neutral",
+        "id": "filler_medium_010"
+      },
+      {
+        "text": "Mücadele yoğunlaşıyor.",
+        "duration": 1.4,
+        "tone": "neutral",
+        "id": "filler_medium_011"
+      },
+      {
+        "text": "Tempo biraz düşmüş gibi görünüyor.",
+        "duration": 2.0,
+        "tone": "calm",
+        "id": "filler_medium_012"
+      },
+      {
+        "text": "Her an bir şey olabilir bu maçta.",
+        "duration": 2.2,
+        "tone": "neutral",
+        "id": "filler_medium_013"
+      },
+      {
+        "text": "Kontrollü bir oyun devam ediyor.",
+        "duration": 2.0,
+        "tone": "neutral",
+        "id": "filler_medium_014"
+      }
+    ]
+  },
+  "connectors": {
+    "after_shot_miss": [
+      {
+        "text": "Şut kaçtı ama gôl aramaya devam ediyorlar.",
+        "id": "connector_after_shot_miss_001"
+      },
+      {
+        "text": "Güzel bir ataktı ama hüsranla sonuçlanıyor!",
+        "id": "connector_after_shot_miss_002"
+      },
+      {
+        "text": "{team}'in gôle ihtiyacı var, ataklarını artırıyorlar.",
+        "id": "connector_after_shot_miss_003"
+      }
+    ],
+    "building_pressure": [
+      {
+        "text": "Baskıyı sürekli artırıyorlar, taraftarlar da bu baskıya destek veriyor. ",
+        "id": "connector_building_pressure_001"
+      },
+      {
+        "text": "Gittikçe tehlikeli oluyorlar! Galibiyet gôlünü arıyorlar.",
+        "id": "connector_building_pressure_002"
+      },
+      {
+        "text": "Uzun süredir rakip yarı sahada oyunu kontrol ediyorlar.",
+        "id": "connector_building_pressure_003"
+      }
+    ],
+    "change_of_pace": [
+      {
+        "text": "Tempo yükseliyor! Oyun hızlandı!",
+        "id": "connector_change_of_pace_001"
+      },
+      {
+        "text": "Oyunu hızlandırarak gôl arıyorlar, agresif başladılar!",
+        "id": "connector_change_of_pace_002"
+      },
+      {
+        "text": "Oyun gel-gitli bir hal aldı! İki taraf da atakta!",
+        "id": "connector_change_of_pace_003"
+      }
+    ]
+  }
+}

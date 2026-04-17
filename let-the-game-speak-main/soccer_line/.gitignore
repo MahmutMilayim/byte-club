@@ -1,0 +1,25 @@
+# Data files
+*.zip
+*.npy
+
+# Images (keep only essential)
+figures/
+examples/*.png
+
+# Inference outputs
+inference/inference_2D/
+inference/inference_3D/
+
+# Cache
+__pycache__/
+*.pyc
+
+# Weights (download separately - too large for git)
+weights/
+
+# Videos
+*.mp4
+
+# Large images
+sn_calibration/images/
+sn_calibration/doc/

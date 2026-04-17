@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VAR Analiz Sistemi | Video Yardımcı Hakem</title>
+    <meta name="description"
+        content="FIFA sertifikalı VAR hakemi gibi davranan, futbol pozisyonlarını IFAB kurallarına göre analiz eden profesyonel sistem">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- History Sidebar -->
+        <aside class="history-sidebar" id="historySidebar">
+            <div class="history-header">
+                <span class="history-title">📋 Analiz Geçmişi</span>
+                <button class="history-clear-btn" id="historyClearBtn" title="Geçmişi Temizle">🗑️</button>
+            </div>
+            <div class="history-list" id="historyList">
+                <div class="history-empty">Henüz analiz yapılmadı.</div>
+            </div>
+        </aside>
+
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="4" y="8" width="40" height="32" rx="4" stroke="currentColor" stroke-width="2" />
+                        <circle cx="24" cy="24" r="8" stroke="currentColor" stroke-width="2" />
+                        <path d="M24 16V12" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        <path d="M24 36V32" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        <path d="M16 24H12" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        <path d="M36 24H32" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        <circle cx="24" cy="24" r="3" fill="currentColor" />
+                    </svg>
+                </div>
+                <div class="logo-text">
+                    <h1>VAR ANALİZ SİSTEMİ</h1>
+                    <span>Video Yardımcı Hakem</span>
+                </div>
+            </div>
+            <div class="header-actions">
+                <div class="header-badge">
+                    <span class="badge-dot"></span>
+                    <span>Gemini 3 Pro</span>
+                </div>
+                <div class="header-badge rag-badge" id="ragBadge" title="Bilgi Tabanı">
+                    <span class="badge-dot rag-dot"></span>
+                    <span>RAG: <span id="ragDocCount">0</span> doküman</span>
+                </div>
+                <button class="settings-btn" id="settingsBtn" title="API Ayarları">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="3" />
+                        <path
+                            d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Input Section -->
+            <section class="input-section">
+                <div class="input-grid">
+                    <!-- Media Upload (Primary) -->
+                    <div class="card upload-card">
+                        <div class="card-header">
+                            <span class="card-icon">🎬</span>
+                            <h2>Pozisyon Videosu Yükle</h2>
+                            <span class="required-tag">Zorunlu</span>
+                        </div>
+                        <div class="upload-area" id="uploadArea">
+                            <div class="upload-content">
+                                <div class="upload-icon">
+                                    <svg viewBox="0 0 48 48" fill="none">
+                                        <path d="M24 32V16M24 16L18 22M24 16L30 22" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M40 28V36C40 38.2091 38.2091 40 36 40H12C9.79086 40 8 38.2091 8 36V28"
+                                            stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                                    </svg>
+                                </div>
+                                <p class="upload-text">Futbol pozisyonu videosu yükleyin</p>
+                                <span class="upload-subtext">AI otomatik analiz edecek</span>
+                                <span class="upload-formats">MP4, MOV, JPG, PNG, GIF, WEBP</span>
+                            </div>
+                            <input type="file" id="fileInput" accept="video/*,image/*" hidden>
+                        </div>
+                        <div class="preview-container" id="previewContainer" style="display: none;">
+                            <div class="preview-header">
+                                <span id="fileName">dosya.mp4</span>
+                                <button class="btn-remove" id="removeFile">✕</button>
+                            </div>
+                            <div class="preview-content" id="previewContent"></div>
+                        </div>
+                    </div>
+
+                    <!-- Position Description (Optional) -->
+                    <div class="card description-card">
+                        <div class="card-header">
+                            <span class="card-icon">📝</span>
+                            <h2>Ek Bilgi</h2>
+                            <span class="optional-tag">Opsiyonel</span>
+                        </div>
+                        <textarea id="positionDescription" class="description-textarea" placeholder="AI videoyu otomatik analiz eder. İsterseniz ek bilgi ekleyebilirsiniz...
+
+Örnek:
+• Sahadaki hakemin verdiği karar
+• Maçın dakikası
+• Özel bir detay"></textarea>
+                        <div class="char-counter">
+                            <span id="charCount">0</span> / 2000
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Rule Selector -->
+                <div class="card rule-card">
+                    <div class="card-header">
+                        <span class="card-icon">📖</span>
+                        <h2>IFAB Kural Seçimi</h2>
+                        <span class="optional-tag">Opsiyonel</span>
+                    </div>
+                    <div class="rule-selector">
+                        <select id="ruleSelect" class="rule-dropdown">
+                            <option value="">Otomatik tespit edilsin</option>
+                            <option value="law11">Law 11 - Ofsayt</option>
+                            <option value="law12">Law 12 - Fauller ve Kötü Davranış</option>
+                            <option value="law12-handball">Law 12 - El ile Oynama</option>
+                            <option value="law12-reckless">Law 12 - Kontrolsüz Müdahale</option>
+                            <option value="law12-dogso">Law 12 - Bariz Gol Şansının Engellenmesi (DOGSO)</option>
+                            <option value="law14">Law 14 - Penaltı Vuruşu</option>
+                        </select>
+                        <div class="rule-info" id="ruleInfo"></div>
+                    </div>
+                </div>
+
+                <!-- RAG Knowledge Base (Auto-loaded) -->
+                <div class="card rag-card">
+                    <div class="card-header">
+                        <span class="card-icon">📚</span>
+                        <h2>Kural Bilgi Tabanı (RAG)</h2>
+                        <span class="rag-status-tag" id="ragStatusTag">Yükleniyor...</span>
+                    </div>
+                    <div class="rag-content">
+                        <div class="rag-info-box">
+                            <p>📄 IFAB Futbol Oyun Kuralları otomatik yüklendi</p>
+                            <span class="rag-info-subtext">Sistem analiz sırasında ilgili kuralları otomatik
+                                bulur</span>
+                        </div>
+                        <div class="rag-documents-list" id="ragDocumentsList">
+                            <!-- Documents will be listed here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Analyze Button -->
+                <button class="analyze-btn" id="analyzeBtn">
+                    <span class="btn-icon">🔍</span>
+                    <span class="btn-text">ANALİZ ET</span>
+                    <div class="btn-loader" id="btnLoader"></div>
+                </button>
+            </section>
+
+            <!-- Results Section -->
+            <section class="results-section" id="resultsSection" style="display: none;">
+                <div class="results-header">
+                    <h2>📊 ANALİZ SONUCU</h2>
+                    <div class="confidence-badge" id="confidenceBadge">
+                        <span class="confidence-label">Güven Seviyesi:</span>
+                        <span class="confidence-value" id="confidenceValue">%85</span>
+                    </div>
+                </div>
+
+                <div class="results-grid">
+                    <!-- Position Summary -->
+                    <div class="result-card summary-card">
+                        <div class="result-header">
+                            <span class="result-icon">📌</span>
+                            <h3>Pozisyon Özeti</h3>
+                        </div>
+                        <div class="result-content" id="summaryContent">
+                            <!-- Dynamic content -->
+                        </div>
+                    </div>
+
+                    <!-- Technical Analysis -->
+                    <div class="result-card analysis-card">
+                        <div class="result-header">
+                            <span class="result-icon">🔍</span>
+                            <h3>Teknik Analiz</h3>
+                        </div>
+                        <div class="result-content" id="analysisContent">
+                            <!-- Dynamic content -->
+                        </div>
+                    </div>
+
+                    <!-- Rule Interpretation -->
+                    <div class="result-card rule-interpretation-card">
+                        <div class="result-header">
+                            <span class="result-icon">📖</span>
+                            <h3>Kural Yorumu</h3>
+                        </div>
+                        <div class="result-content" id="ruleContent">
+                            <!-- Dynamic content -->
+                        </div>
+                    </div>
+
+                    <!-- VAR Assessment -->
+                    <div class="result-card var-card">
+                        <div class="result-header">
+                            <span class="result-icon">🧠</span>
+                            <h3>VAR Değerlendirmesi</h3>
+                        </div>
+                        <div class="result-content" id="varContent">
+                            <!-- Dynamic content -->
+                        </div>
+                    </div>
+
+                    <!-- Final Decision -->
+                    <div class="result-card decision-card">
+                        <div class="result-header">
+                            <span class="result-icon">✅</span>
+                            <h3>Nihai Karar</h3>
+                        </div>
+                        <div class="result-content decision-content" id="decisionContent">
+                            <!-- Dynamic content -->
+                        </div>
+                    </div>
+
+                    <!-- Notes -->
+                    <div class="result-card notes-card" id="notesCard" style="display: none;">
+                        <div class="result-header">
+                            <span class="result-icon">⚠️</span>
+                            <h3>Not</h3>
+                        </div>
+                        <div class="result-content" id="notesContent">
+                            <!-- Dynamic content -->
+                        </div>
+                    </div>
+
+                    <!-- Video Description Accordion -->
+                    <div class="result-card desc-accordion-card" id="descAccordionCard" style="display: none;">
+                        <div class="result-header accordion-toggle" id="descAccordionToggle">
+                            <span class="result-icon">🎬</span>
+                            <h3>AI Video Açıklaması</h3>
+                            <span class="accordion-arrow" id="descAccordionArrow">▼</span>
+                        </div>
+                        <div class="accordion-body" id="descAccordionBody" style="display: none;">
+                            <div class="result-content" id="videoDescContent">
+                                <!-- Dynamic content -->
+                            </div>
+                        </div>
+                    </div>
+
+                </div><!-- /.results-grid -->
+
+                <!-- Actions -->
+                <div class="results-actions">
+                    <button class="action-btn secondary" id="newAnalysisBtn">
+                        <span>🔄</span> Yeni Analiz
+                    </button>
+                    <button class="action-btn primary" id="exportBtn">
+                        <span>📋</span> Raporu Kopyala
+                    </button>
+                    <button class="action-btn primary" id="exportPdfBtn">
+                        <span>📄</span> PDF İndir
+                    </button>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>IFAB Futbol Oyun Kuralları (2024/25) esas alınmıştır</p>
+            <p class="disclaimer">Bu sistem eğitim amaçlıdır. Resmi hakem kararlarının yerini almaz.</p>
+        </footer>
+    </div>
+
+    <!-- API Key Modal -->
+    <div class="modal-overlay" id="apiKeyModal" style="display: none;">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>🔑 API Ayarları</h2>
+                <button class="modal-close" id="modalClose">✕</button>
+            </div>
+            <div class="modal-body">
+                <p class="modal-description">
+                    Gemini 3 Pro API kullanmak için Google AI Studio'dan API anahtarı almanız gerekmektedir.
+                </p>
+                <a href="https://aistudio.google.com/apikey" target="_blank" class="api-link">
+                    🔗 Google AI Studio'da API Anahtarı Al
+                </a>
+                <div class="input-group">
+                    <label for="apiKeyInput">API Anahtarı</label>
+                    <div class="input-wrapper">
+                        <input type="password" id="apiKeyInput" placeholder="API anahtarınızı girin...">
+                        <button class="toggle-visibility" id="toggleVisibility">👁️</button>
+                    </div>
+                </div>
+                <div class="api-status" id="apiStatus"></div>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn secondary" id="removeApiKey">Anahtarı Sil</button>
+                <button class="modal-btn primary" id="saveApiKey">Kaydet</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="rules.js"></script>
+    <script src="rules-data.js"></script>
+    <script src="backend-api.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>

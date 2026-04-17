@@ -1,26 +1,111 @@
-# Unity generated
-[Ll]ibrary/
-[Tt]emp/
-[Oo]bj/
-[Bb]uild/
-[Bb]uilds/
-[Ll]ogs/
-[Uu]ser[Ss]ettings/
+# ─── Eski / kaldırılan sistemler ─────────────────────────────────────────────
+# ai-spiker: let-the-game-speak-main ile değiştirildi, repo'ya alınmıyor
+ai-spiker/
 
-# IDE
-.vscode/
-.idea/
-*.csproj
-*.sln
-*.user
-*.userprefs
-*.pidb
-*.booproj
-*.svd
+# ─── Arşiv dosyaları ─────────────────────────────────────────────────────────
+*.zip
 
-# OS files
+# ─── Çalışma zamanı logları ──────────────────────────────────────────────────
+logs/
+*.log
+
+# ─── Root rapor/belgeler (hassas / büyük) ────────────────────────────────────
+/*.pdf
+/*.docx
+/*.doc
+/[[]Fayt*
+/video-transkript/
+/project-*.json
+
+# ─── Root görseller (logo/AI-üretim çıktıları) ──────────────────────────────
+/*.png
+/*.jpg
+/*.jpeg
+
+# ─── Python ──────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+.Python
+.ipynb_checkpoints/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+venv/
+.venv/
+.conda/
+
+# ─── Node ────────────────────────────────────────────────────────────────────
+node_modules/
+dist/
+.vite/
+
+# ─── Ortam / gizli değerler ──────────────────────────────────────────────────
+.env
+.env.local
+.env.*.local
+.env.*
+*.pem
+*.key
+*.p12
+!.env.example
+!**/.env.example
+
+# ─── Component bazlı: football_sim ───────────────────────────────────────────
+football_sim/output/
+football_sim/*.pt
+football_sim/*.pth
+football_sim/*.onnx
+football_sim/*.mp4
+football_sim/*.avi
+football_sim/*.mov
+
+# ─── Component bazlı: let-the-game-speak-main ───────────────────────────────
+let-the-game-speak-main/output/
+let-the-game-speak-main/uploads/
+let-the-game-speak-main/backend/output/
+let-the-game-speak-main/backend/uploads/
+let-the-game-speak-main/frontend/node_modules/
+let-the-game-speak-main/frontend/dist/
+let-the-game-speak-main/frontend/.vite/
+let-the-game-speak-main/venv/
+let-the-game-speak-main/.venv/
+let-the-game-speak-main/soccer_line/weights/
+let-the-game-speak-main/weights/
+let-the-game-speak-main/stage
+let-the-game-speak-main/shoot_clip/
+let-the-game-speak-main/last_frames.jsonl
+let-the-game-speak-main/test.mp4
+let-the-game-speak-main/predicted_passes*.txt
+
+# ─── Component bazlı: mac_chatbot ────────────────────────────────────────────
+mac_chatbot/venv/
+mac_chatbot/.venv/
+mac_chatbot/test_5dk.mp4
+mac_chatbot/static/video.mp4
+mac_chatbot/sonuc_analiz*.json
+mac_chatbot/sonuc_analiz*.txt
+
+# ─── Component bazlı: main-dashboard ─────────────────────────────────────────
+main-dashboard/node_modules/
+main-dashboard/dist/
+main-dashboard/.vite/
+
+# ─── Component bazlı: var ────────────────────────────────────────────────────
+var/.venv/
+var/venv/
+var/database/chroma_db/
+var/backend/__pycache__/
+var/__pycache__/
+var/WhatsApp Video *.mp4
+var/assets/*.mp4
+var/assets/*.mov
+var/assets/*.avi
+var/assets/*.webm
+
+# ─── OS / IDE ────────────────────────────────────────────────────────────────
 .DS_Store
 Thumbs.db
-
-# Unity packages
-*.unitypackage
+.idea/
+.vscode/
+*.code-workspace

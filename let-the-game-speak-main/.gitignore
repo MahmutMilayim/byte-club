@@ -1,0 +1,103 @@
+# --- OS / cache ---
+.DS_Store
+__pycache__/
+*.py[cod]
+*.pyo
+*.ipynb_checkpoints
+*.log
+
+# --- Environment & secrets ---
+.env
+.env.local
+.env.*.local
+.env.*
+!.env.example
+project-*.json
+*service-account*.json
+*credentials*.json
+*.pem
+*.key
+*.p12
+
+# --- Virtual environments ---
+.venv/
+venv/
+.conda/
+
+# --- Node / build ---
+node_modules/
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+
+# --- Runtime outputs/uploads ---
+output/
+uploads/
+backend/uploads/
+backend/output/
+test_videos/
+predicted_passes*.txt
+last_frames.jsonl
+stage
+logs/
+
+# --- Media / model artifacts ---
+*.mp4
+*.avi
+*.mov
+*.mp3
+*.jpg
+*.png
+*.pt
+*.pth
+*.onnx
+weights/
+soccer_line/weights/
+soccer_line/*.zip
+soccer_line/*.npy
+soccer_line/figures/
+soccer_line/examples/*.png
+soccer_line/inference/inference_2D/
+soccer_line/inference/inference_3D/
+soccer_line/sn_calibration/images/
+soccer_line/sn_calibration/doc/
+
+# --- Docs / presentation (non-infrastructure) ---
+CHANGELOG_FULLSTACK.md
+MIGRATION_GUIDE.md
+QUICKSTART.md
+README*.md
+Football_Object_Detection.ipynb
+commentary_templates/README_BACKGROUND_MUSIC.md
+frontend/public/poster.pdf
+frontend/public/workflow-uml.png
+frontend/src/pages/HowItWorks.jsx
+frontend/src/pages/Poster.jsx
+
+# --- Demo/showcase assets ---
+frontend/public/demo/
+frontend/public/background-music.mp3
+commentary_templates/arka_plan.mp3
+
+# --- Local experiment / test scripts ---
+COLAB_SETUP.md
+EXTRACT_PASSES_USAGE.md
+count_p1_completed_passes.py
+evaluate_pass_accuracy.py
+extract_passes_video_to_txt.py
+evaluation/
+run_eval_v2.py
+test_*.py
+scripts/test_*.py
+scripts/analyze_segments.py
+scripts/visualize_*.py
+scripts/tactical_board.py
+scripts/tune_bytetrack.py
+scripts/calibrate_durations.py
+convert_video.py
+shoot_clip/
+
+# --- IDE ---
+.idea/
+.vscode/
+*.code-workspace

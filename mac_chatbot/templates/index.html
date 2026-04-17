@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maç Chatbot — Diyalog</title>
+    <link rel="icon" href="{{ url_for('static', filename='favicon.png') }}?v=2" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="studio-bg" aria-hidden="true"></div>
+    <div class="studio-grain" aria-hidden="true"></div>
+
+    <header class="studio-header">
+        <a class="hub-back" href="http://localhost:3000/?focus=mac-chatbot" title="Hub'a dön">
+            <span class="hub-arrow" aria-hidden="true">←</span>
+            <span class="hub-text">Hub</span>
+        </a>
+        <div class="studio-mark">
+            Match Studio<small>02 / 04 · Diyalog</small>
+        </div>
+        <div class="studio-crumb" aria-hidden="true">Maç Chatbot</div>
+    </header>
+
+    <main class="app-container">
+
+        <!-- ══ Video Section ══ -->
+        <section class="video-section">
+            <div class="video-top-bar">
+                <span class="video-eyebrow">— Maç Özeti —</span>
+                <h1 class="video-title">Analiz edilen maç</h1>
+            </div>
+
+            <div class="video-wrapper">
+                <video id="matchVideo" controls src="{{ url_for('static', filename='video.mp4') }}" preload="metadata">
+                    Tarayıcınız video etiketini desteklemiyor.
+                </video>
+            </div>
+
+            <div class="timeline-container">
+                <div class="timeline-legend">Önemli anlar</div>
+                <div class="timeline-track" id="timelineTrack">
+                    <!-- Markers injected by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ Chat Section ══ -->
+        <aside class="chat-section">
+            <header class="chat-header">
+                <div class="chat-header-left">
+                    <span class="chat-title">Oyun Asistanı</span>
+                    <span class="status-dot" aria-label="bağlı"></span>
+                </div>
+                <span class="chat-hint"><kbd>Enter</kbd> gönder</span>
+            </header>
+
+            <div class="chat-history" id="chatHistory">
+                <div class="chat-bubble bot-message">
+                    Merhaba. Ekranda analiz ettiğim maçla ilgili soru sor; sana cevabı verip videoyu ilgili saniyeye sararım.
+                </div>
+            </div>
+
+            <form class="chat-input-area" onsubmit="event.preventDefault(); sendMessage();">
+                <input type="text" id="userInput" autocomplete="off" placeholder="Maç hakkında bir soru sor…" onkeypress="handleEnter(event)">
+                <button type="submit" id="sendBtn" aria-label="Mesajı gönder">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                </button>
+            </form>
+        </aside>
+    </main>
+
+    <script>
+        const timelineData = {{ timeline | tojson | safe }};
+    </script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

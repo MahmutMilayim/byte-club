@@ -1,0 +1,31 @@
+# Python ve önbellek
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+
+# Ortam değişkenleri
+.env
+venv/
+.venv/
+env/
+
+# Veritabanı ve gereksiz medya boyutları (image'ı hafif tutmak için)
+database/chroma_db/
+assets/*.mp4
+assets/*.mov
+assets/*.avi
+assets/*.webm
+
+# Test dosyaları
+tests/
+rag_output.txt
+rag_output_full.txt
+
+# Çalışma Ortamı Araçları
+.git/
+.vscode/
+.idea/
+*.DS_Store
+Thumbs.db
