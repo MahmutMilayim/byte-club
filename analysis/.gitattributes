@@ -1,0 +1,2 @@
+# LFS only under analysis (does not change repo-root .gitattributes)
+third_party/**/*.pt filter=lfs diff=lfs merge=lfs -text
